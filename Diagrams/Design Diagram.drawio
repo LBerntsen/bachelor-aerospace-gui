@@ -4,7 +4,10 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="MyPHV16-98RM3GqdroEM-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="API&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="OfMfClMTB-o0tbhI7rxP-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="290" width="440" x="30" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;b&gt;API&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="110" width="300" x="60" y="260" as="geometry" />
         </mxCell>
         <mxCell id="MyPHV16-98RM3GqdroEM-9" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-6">
@@ -32,7 +35,12 @@
           <mxGeometry height="60" width="120" x="190" y="450" as="geometry" />
         </mxCell>
         <mxCell id="MyPHV16-98RM3GqdroEM-17" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MyPHV16-98RM3GqdroEM-16">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="130" y="210" />
+              <mxPoint x="180" y="210" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="MyPHV16-98RM3GqdroEM-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Telemetry Service" vertex="1">
           <mxGeometry height="60" width="120" x="70" y="300" as="geometry" />
@@ -46,8 +54,8 @@
         <mxCell id="MyPHV16-98RM3GqdroEM-21" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MyPHV16-98RM3GqdroEM-19">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="230" y="235" />
-              <mxPoint x="290" y="235" />
+              <mxPoint x="230" y="220" />
+              <mxPoint x="290" y="220" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -64,6 +72,9 @@
         </mxCell>
         <mxCell id="OfMfClMTB-o0tbhI7rxP-1" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-5">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OfMfClMTB-o0tbhI7rxP-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Backend&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="80" y="450" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
