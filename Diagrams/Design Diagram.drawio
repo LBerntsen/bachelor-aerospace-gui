@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Safari/605.1.15" version="29.3.4">
+  <diagram name="Page-1" id="_oFje1MmlGFQeavJaLag">
+    <mxGraphModel dx="976" dy="665" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MyPHV16-98RM3GqdroEM-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="API&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="300" x="60" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-9" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Rocket" vertex="1">
+          <mxGeometry height="210" width="80" x="640" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-14" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Telemetry" vertex="1">
+          <mxGeometry height="60" width="80" x="470" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-7" parent="1" style="triangle;whiteSpace=wrap;html=1;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="80" width="60" x="650" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-8" parent="1" style="triangle;whiteSpace=wrap;html=1;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="80" width="60" x="650" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-12" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="CSVReaderService" vertex="1">
+          <mxGeometry height="60" width="120" x="190" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-17" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MyPHV16-98RM3GqdroEM-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Telemetry Service" vertex="1">
+          <mxGeometry height="60" width="120" x="70" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-15" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-13" parent="1" style="shape=datastore;whiteSpace=wrap;html=1;" value="Shared csv file" vertex="1">
+          <mxGeometry height="60" width="60" x="360" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-21" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="MyPHV16-98RM3GqdroEM-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="235" />
+              <mxPoint x="290" y="235" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OfMfClMTB-o0tbhI7rxP-5" connectable="0" parent="MyPHV16-98RM3GqdroEM-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Only over localhost" vertex="1">
+          <mxGeometry relative="1" x="-0.1579" y="3" as="geometry">
+            <mxPoint x="-5" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Frontent" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="MyPHV16-98RM3GqdroEM-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Command Service" vertex="1">
+          <mxGeometry height="60" width="120" x="230" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="OfMfClMTB-o0tbhI7rxP-1" edge="1" parent="1" source="MyPHV16-98RM3GqdroEM-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="MyPHV16-98RM3GqdroEM-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
