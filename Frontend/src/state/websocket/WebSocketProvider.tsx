@@ -15,6 +15,10 @@ export default function WebSocketProvider()
                    dispatch(appendForId({id: item.id, value: item.value}));
                });
            }
+           else if(message.type === "update")
+           {
+               dispatch(appendForId({id: message.data.id, value: message.data.value}));
+           }
         });
     }, [dispatch]);
 
