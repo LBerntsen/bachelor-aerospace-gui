@@ -5,7 +5,7 @@ export function connectWebSocket(onMessage: (data: any) => void)
     if(socket)
         return socket;
 
-    socket = new WebSocket("ws://localhost:5009");
+    socket = new WebSocket("ws://localhost:5074/ws");
 
     socket.onopen = () => {
         console.log("WebSocket connected");

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7694F594-9851-4276-A21E-94894AB7631B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BE3954AD-FBC2-4D75-9421-5745E84DA9C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorReader", "SensorReader\SensorReader.csproj", "{69031204-F695-43D5-8795-97B196548085}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{91A17486-A76C-47CB-AA80-9A91F47CEACF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7694F594-9851-4276-A21E-94894AB7631B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7694F594-9851-4276-A21E-94894AB7631B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7694F594-9851-4276-A21E-94894AB7631B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7694F594-9851-4276-A21E-94894AB7631B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3954AD-FBC2-4D75-9421-5745E84DA9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3954AD-FBC2-4D75-9421-5745E84DA9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3954AD-FBC2-4D75-9421-5745E84DA9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3954AD-FBC2-4D75-9421-5745E84DA9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69031204-F695-43D5-8795-97B196548085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69031204-F695-43D5-8795-97B196548085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69031204-F695-43D5-8795-97B196548085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69031204-F695-43D5-8795-97B196548085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91A17486-A76C-47CB-AA80-9A91F47CEACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91A17486-A76C-47CB-AA80-9A91F47CEACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91A17486-A76C-47CB-AA80-9A91F47CEACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91A17486-A76C-47CB-AA80-9A91F47CEACF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
