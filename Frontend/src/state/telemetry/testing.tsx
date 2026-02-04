@@ -1,20 +1,21 @@
-import {useDispatch, useSelector} from "react-redux";
-import {appendForId, selectLatestTelemetryValueById, selectTelemetryValuesById} from "./telemetrySlice.ts";
+import {useSelector} from "react-redux";
+import {selectLatestTelemetryValueById, selectTelemetryValuesById} from "./telemetrySlice.ts";
 
 export default function Testing()
 {
-    const testList = useSelector(selectTelemetryValuesById("sensor2"));
-    const testLatest = useSelector(selectLatestTelemetryValueById("sensor2"));
-    const dispatch = useDispatch();
+    const testList = useSelector(selectTelemetryValuesById("altitude"));
+    const testLatest = useSelector(selectLatestTelemetryValueById("altitude"));
 
     return (
-        <div className="bg-red-500">
+        <div>
             <h1>WebSocket Live Messages</h1>
-            <button className="bg-blue-300" onClick={() => dispatch(appendForId({id: "testing", value: Math.floor(Math.random() * 100)}))}>click to add new number</button>
-            <p>latest value: {testLatest}</p>
+            <button onClick={() => console.log(testList, testLatest)}>test</button>
+            <p>latest time: {testLatest.timeStamp}</p>
+            <p>latest value: {testLatest.value}</p>
+            <p>lengde: {testList.length}</p>
             <ol className="border-4 border-green-500">
                 {testList.map((val) => (
-                    <li>{val}</li>
+                    <li>{val.timeStamp} <span className={"bg-blue-300"}>{val.value}</span></li>
                 ))}
             </ol>
         </div>

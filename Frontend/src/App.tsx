@@ -5,6 +5,7 @@ import Input from "./components/Input.tsx";
 export default function App() {
     return (
         <>
+            <Testing/>
             <WebSocketProvider/>
             <TestChart sensorId="sensor2"/>
             <Input/>
