@@ -7,7 +7,7 @@ const TestChart = () => {
 const rawData = useSelector(selectTelemetryValuesById("sensor2")) || [];
 
 const data = rawData
-  .slice(-100) // keep last 100
+  .slice(-100)
   .map((value, index) => ({
     timestamp: Date.now() + index,
     value
