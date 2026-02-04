@@ -2,16 +2,21 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { useSelector } from "react-redux";
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
 
-const TestChart = () => {
 
-const rawData = useSelector(selectTelemetryValuesById("sensor2")) || [];
+type TestChartProps = {
+  sensorId: string;
+};
 
-const data = rawData
-  .slice(-100)
-  .map((value, index) => ({
-    timestamp: Date.now() + index,
-    value
-  }));
+const TestChart = ({ sensorId }: TestChartProps) => {
+
+  const rawData = useSelector(selectTelemetryValuesById(sensorId)) || [];
+
+  const data = rawData
+    .slice(-100)
+    .map((value, index) => ({
+      timestamp: Date.now() + index,
+      value
+    }));
 
 
   return (
@@ -41,6 +46,7 @@ const data = rawData
           dataKey="value"
           stroke="#8884d8"
           dot={false}
+          isAnimationActive={false}
         />
       </LineChart>
     </ResponsiveContainer>
