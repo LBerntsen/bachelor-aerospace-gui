@@ -4,7 +4,7 @@ import time
 
 def Write_in_csv_file(data):
     with open("output.csv", "a", newline="") as file:
-        writer = csv.writer(file)
+        writer = csv.writer(file, delimiter=";")
         writer.writerows([data])
         print(data)
 

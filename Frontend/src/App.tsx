@@ -4,7 +4,7 @@ import TestChart from "./components/TestChart.tsx";
 export default function App() {
     return (
         <>
-            <TestChart/>
+            <Testing/>
             <WebSocketProvider/>
             
         </>

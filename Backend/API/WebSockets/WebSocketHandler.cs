@@ -1,13 +1,13 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using Domain.Models;
+using Domain.Telemetry;
 
 namespace API.WebSockets;
 
 public class WebSocketHandler
 {
-    private static readonly Random _random = Random.Shared;
-
     public static async Task Handle(HttpContext context)
     {
         if (!context.WebSockets.IsWebSocketRequest)
@@ -16,44 +16,36 @@ public class WebSocketHandler
             return;
         }
 
+        var store = context.RequestServices.GetRequiredService<TelemetryStore>();
         using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
      
         // Initial data
-        var initialMessage = new
+        await SendJsonAsync(webSocket, new
         {
             type = "initial",
-            data = new[]
-            {
-                new { id = "sensor1", value = 12 },
-                new { id = "sensor2", value = 99 },
-                new { id = "sensor3", value = 42 },
-                new { id = "test", value = 123 },
-                new { id = "pokpwoekf", value = 42340 },
-                new { id = "test1231254536436", value = 123 },
-                new { id = "sensor1", value = 55212 },
-                new { id = "sensor2", value = 122221 },
-                new { id = "sensor2", value = 11112 }
-            }
-        };
-
-        await SendJsonAsync(webSocket, initialMessage);
+            data = store.GetAll()
+        });
         
-        // Updates
-        while (webSocket.State == WebSocketState.Open)
+        // Update
+        async void OnStoreUpdate(SensorData item)
         {
-            var updateMessage = new
+            var message = new
             {
                 type = "update",
-                data = new
-                {
-                    id = "sensor2",
-                    value = _random.Next()
-                }
+                data = item
             };
 
-            await SendJsonAsync(webSocket, updateMessage);
-            await Task.Delay(1000);
+            await SendJsonAsync(webSocket, message);
         }
+
+        store.OnUpdate += OnStoreUpdate;
+
+        while (webSocket.State == WebSocketState.Open)
+        {
+            await Task.Delay(1);
+        }
+
+        store.OnUpdate -= OnStoreUpdate;
     }
 
     private static async Task SendJsonAsync(WebSocket socket, object payload)
