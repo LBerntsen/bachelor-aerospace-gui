@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { useSelector } from "react-redux";
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
 
@@ -9,47 +9,80 @@ type TestChartProps = {
 
 const TestChart = ({ sensorId }: TestChartProps) => {
 
-  const rawData = useSelector(selectTelemetryValuesById(sensorId)) || [];
+const rawData = useSelector(selectTelemetryValuesById(sensorId));
 
-  const data = rawData
-    .slice(-100)
-    .map((value, index) => ({
-      timestamp: Date.now() + index,
-      value
-    }));
+const data = rawData.map(d => ({
+  ...d,
+  timeStamp: new Date(d.timeStamp).getTime(),
+}));
+
+const latestValue = data[data.length - 1]?.value;
+
 
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
+      <div className="relative w-full h-80 rounded-2xl bg-[#161616] p-5 border border-[#1e293b]">
+          <div className="absolute top-5 right-5 z-10">
+            <p className="text-xs text-neutral-500 font-semibold">
+              {sensorId}
+            </p>
 
-        <XAxis
-          dataKey="timestamp"
-          type="number"
-          domain={['auto', 'auto']}
-          tickFormatter={(time) =>
-            new Date(time).toLocaleTimeString()
-          }
-        />
+            <div className="flex items-start gap-2 mt-1">
+              <span className="text-4xl font-semibold text-neutral-100">
+                {latestValue?.toLocaleString() ?? "--"}
+              </span>
 
-        <YAxis />
+              <span className="text-neutral-400 text-sm">m</span>
+            </div>
+      </div>
+      <div className="pt-16 h-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
 
-        <Tooltip
-          labelFormatter={(time) =>
-            new Date(time).toLocaleTimeString()
-          }
-        />
+            <XAxis
+              dataKey="timeStamp"
+              type="number"
+              domain={['dataMin', 'dataMax']}
+              tickFormatter={(time) =>
+                new Date(time).toLocaleTimeString()
+              }
+              label={{
+                value: "Time",
+                position: "insideBottom",
+                offset: -5
+              }}
+            />
+            <YAxis
+            label={{
+              value: sensorId,
+              angle: -90,
+              position: "insideLeft"
+            }}
+            />
 
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-          dot={false}
-          isAnimationActive={false}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+            <Tooltip
+              labelFormatter={(time) =>
+                new Date(time).toLocaleTimeString()
+              }
+              
+            />
+            <CartesianGrid
+              stroke="#1e293b"
+              vertical={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#22d3ee"
+              
+              dot={false}
+              isAnimationActive={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 

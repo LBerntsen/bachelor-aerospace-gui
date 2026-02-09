@@ -9,11 +9,11 @@ def Write_in_csv_file(data):
         print(data)
 
 open("output.csv", "w").close()
-
+time.sleep(5)
 with open('data.csv', mode='r', newline='', encoding='utf-8') as file:
     csv_reader = csv.reader(file, delimiter=';')
     for row in csv_reader:
-        time.sleep(0.05)
+        time.sleep(0.01)
         Write_in_csv_file(row)
 
 
