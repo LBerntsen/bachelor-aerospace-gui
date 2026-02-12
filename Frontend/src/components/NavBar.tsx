@@ -14,11 +14,11 @@ export function Navbar(){
             <div className="flex flex-row items-center font-bold">
                 <img className="rounded-lg" width={64}src={phoenixLogo}/>
                 <div>
-                    <div className="flex justify-center gap-4">
-                        <h1 className="text-white text-xl">Pheonix</h1>
+                    <div className="flex justify-center gap-4 ">
+                        <h1 className="text-white text-xl">Phoenix 2</h1>
                         <IsRunning sensorId="isRunning"/>
                     </div>
-                    <h1 className="text-white text-xs">MISSION CONTROL UNIT</h1>
+                    <h1 className="text-white text-xs ">Ground Control System</h1>
                 </div>
                 <div className="">
                     
@@ -28,9 +28,11 @@ export function Navbar(){
                 <div className="sm:gap-6 flex flex-col">
                     <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Dashboard </Link>
                     
-                    <Link to ="/telemetry" rel="noopener noreferrer" target="_blank" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Telemetry </Link>
-                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">page3 </Link>
-                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Settings </Link>
+                    <Link to ="/propulsion" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Propulsion </Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Avionic Hardware </Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Avionic Software</Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Recovery</Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Settings</Link>
                 </div>
             </div>
         </div>
