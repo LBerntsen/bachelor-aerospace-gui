@@ -37,7 +37,6 @@ export function Propulsion(){
                             <TextData sensorId="Temperature"/>
                             <TextData sensorId="Temperature"/>
                         </div>
-                        <TestChart sensorId="Temperature"/>
                     </div>
                 </div>
                 

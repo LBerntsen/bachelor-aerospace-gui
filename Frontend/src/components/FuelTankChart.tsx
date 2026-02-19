@@ -1,15 +1,26 @@
 import { BarChart, Bar, ResponsiveContainer, CartesianGrid,YAxis } from 'recharts';
-
-const fuelLevel = 65;
-
-const data = [
-  { fuel: 65 },
+import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
+import { useSelector } from "react-redux";
 
 
-];
 
-const FuelTank = () => {
-  return (
+type FuelTankProps = {
+  sensorId: string;
+};
+
+
+
+
+const FuelTank = ({ sensorId }: FuelTankProps) => {
+
+    const rawData = useSelector(selectTelemetryValuesById(sensorId));
+
+    const data = rawData.map(d => ({
+    ...d,
+    timeStamp: new Date(d.timeStamp).getTime(),
+    }));
+
+    return (
     <>
         <div className='flex h-3/4 items-stretch rounded-2xl bg-[#161616] p-5 border border-[#1e293b]'>
             <div className="w-50  border-2 border-slate-800 rounded-[20px] p-2.5 bg-[#111]">
@@ -25,7 +36,7 @@ const FuelTank = () => {
                     Fuel level
                 </p>
                 <div className='font-bold text-white text-5xl'>
-                    {fuelLevel}%
+                    {data}%
                 </div>
 
                 <div className="py-4">
