@@ -10,7 +10,7 @@ interface SensorData
 
 interface SensorEntry
 {
-    timeStamp: string
+    timeStamp: number
     value: number
 }
 
@@ -31,7 +31,7 @@ const telemetrySlice = createSlice({
 
             if(!state.canMap[id.toLowerCase()])
                 state.canMap[id.toLowerCase()] = [];
-            state.canMap[id.toLowerCase()].push({timeStamp: timeStamp, value: value});
+            state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
         }
     }
 });
@@ -51,6 +51,6 @@ export function selectLatestTelemetryValueById(id: string)
 {
     return function (state: RootState): SensorEntry
     {
-        return state.telemetry.canMap[id.toLowerCase()]?.at(-1) ?? {timeStamp: new Date().toTimeString(), value: -1};
+        return state.telemetry.canMap[id.toLowerCase()]?.at(-1) ?? {timeStamp: new Date().getTime(), value: -1};
     }
 }

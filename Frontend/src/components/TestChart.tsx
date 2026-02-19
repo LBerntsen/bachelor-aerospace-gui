@@ -9,12 +9,7 @@ type TestChartProps = {
 
 const TestChart = ({ sensorId }: TestChartProps) => {
 
-const rawData = useSelector(selectTelemetryValuesById(sensorId));
-
-const data = rawData.map(d => ({
-  ...d,
-  timeStamp: new Date(d.timeStamp).getTime(),
-}));
+const data = useSelector(selectTelemetryValuesById(sensorId));
 
 const latestValue = data[data.length - 1]?.value;
 
