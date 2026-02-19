@@ -13,12 +13,7 @@ type FuelTankProps = {
 
 const FuelTank = ({ sensorId }: FuelTankProps) => {
 
-    const rawData = useSelector(selectTelemetryValuesById(sensorId));
-
-    const data = rawData.map(d => ({
-    ...d,
-    timeStamp: new Date(d.timeStamp).getTime(),
-    }));
+    const data = useSelector(selectTelemetryValuesById(sensorId));
 
     return (
     <>
