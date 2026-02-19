@@ -22,13 +22,13 @@ const ChamberTemp = ({ sensorId }: ChamberTempProps) => {
     let statusStyles = "border-emerald-400/30 bg-emerald-500/10 text-emerald-300";
     let dotColor = "bg-emerald-400";
 
-    if (latestValue > 3200) {
+    if (latestValue > 20) {
         status = "Warning";
         statusStyles = "border-orange-400/30 bg-orange-500/10 text-orange-300";
         dotColor = "bg-orange-400";
     }
 
-    if (latestValue > 3600) {
+    if (latestValue > 100) {
         status = "Danger";
         statusStyles = "border-red-400/30 bg-red-500/10 text-red-300";
         dotColor = "bg-red-400";

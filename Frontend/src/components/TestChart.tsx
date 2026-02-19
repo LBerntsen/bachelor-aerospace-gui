@@ -28,7 +28,7 @@ const latestValue = data[data.length - 1]?.value;
             </p>
 
             <div className="flex items-start gap-2 mt-1">
-              <span className="text-4xl font-semibold text-neutral-100">
+              <span className="text-4xl font-semibold ">
                 {latestValue?.toLocaleString() ?? "--"}
               </span>
 

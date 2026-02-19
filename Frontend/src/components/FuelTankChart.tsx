@@ -55,21 +55,6 @@ const FuelTank = () => {
                             </p>
                         </div>
                     </div>
-                    <div className='bg-[#161616] p-2 border my-2 border-[#1e293b]'>
-                        <p className="tracking-[0.25em] text-neutral-500 font-semibold">
-                            Mass flow rate
-                        </p>
-                        <div className='flex justify-between '>
-                            <span className="text-xl font-semibold text-neutral-100">
-                            Waiting for data...
-                            </span>
-                            <p className="text-xl font-semibold text-neutral-100">
-                                Kg/s
-                            </p>
-                        </div>
-                        
-                    </div>
-                    
                 </div>
             </div>
             

@@ -3,6 +3,7 @@ import WebSocketProvider from "../state/websocket/WebSocketProvider.tsx";
 import Header from "../components/Header.tsx"
 import TextData from "../components/TextData.tsx";
 import FuelTank from "../components/FuelTankChart.tsx";
+import CameraFeed from "../components/VideoStream.tsx";
 
 export function Home(){
     return (
@@ -16,15 +17,16 @@ export function Home(){
                     padding: "20px"
                 }}>
                     <div>
+                        <CameraFeed/>
+                    </div>
+                    <div>
                         <TextData sensorId="Roll"/>
                         <TextData sensorId="Pitch"/>
                         <TextData sensorId="Yaw"/>
                     </div>
-                    <TestChart sensorId="Pressure"/>
-                    <TestChart sensorId="N2Otank" />
-                    <TestChart sensorId="Altitude"/>
-                    <TestChart sensorId="Pressure"/>
-                    <TestChart sensorId="Temperature"/>
+                    <TestChart sensorId="N20Den"/>
+
+
             </div>
         </div>
         

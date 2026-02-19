@@ -17,15 +17,27 @@ export function Propulsion(){
                 </div>
                 <div className="h-screen">
                     <div>
-                        <CameraFeed/>
-                    </div>
-                    <div>
                         <ChamberTemp sensorId="Temperature" />
                     </div>
-                    <div className="flex justify-between rounded-2xl bg-[#161616] p-5 border border-[#1e293b] my-4">
-                        <TextData sensorId="Temperature"/>
-                        <TextData sensorId="Temperature"/>
-                        <TextData sensorId="Temperature"/>
+                    <div className=" rounded-2xl bg-[#161616] p-5 border border-[#1e293b] my-4">
+                        <div className="uppercase tracking-[0.25em] text-white text-sm font-semibold pb-2">
+                            Temperture Combustion chamber
+                        </div>
+                        <div className="flex justify-between ">
+                            <TextData sensorId="Temperature"/>
+                            <TextData sensorId="Temperature"/>
+                        </div>
+                        
+                    </div>
+                    <div className=" rounded-2xl bg-[#161616] p-5 border border-[#1e293b] my-4">
+                        <div className="uppercase tracking-[0.25em] text-white text-sm font-semibold pb-2">
+                            Temperture injector
+                        </div>
+                        <div className="flex justify-between">
+                            <TextData sensorId="Temperature"/>
+                            <TextData sensorId="Temperature"/>
+                        </div>
+                        <TestChart sensorId="Temperature"/>
                     </div>
                 </div>
                 
