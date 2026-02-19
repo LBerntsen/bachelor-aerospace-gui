@@ -36,7 +36,7 @@ const FuelTank = ({ sensorId }: FuelTankProps) => {
                     Fuel level
                 </p>
                 <div className='font-bold text-white text-5xl'>
-                    {data}%
+                    65%
                 </div>
 
                 <div className="py-4">

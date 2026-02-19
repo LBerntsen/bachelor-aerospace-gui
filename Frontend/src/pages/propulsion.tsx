@@ -13,7 +13,7 @@ export function Propulsion(){
             <Header pageName="Propulsion"/>
             <div className="grid grid-cols-2 gap-6 w-full p-4">
                 <div className="h-screen">
-                    <FuelTank></FuelTank>
+                    <FuelTank sensorId="M2POS"></FuelTank>
                 </div>
                 <div className="h-screen">
                     <div>
