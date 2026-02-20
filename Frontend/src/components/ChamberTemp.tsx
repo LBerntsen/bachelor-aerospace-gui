@@ -32,9 +32,8 @@ const ChamberTemp = ({ sensorId }: ChamberTempProps) => {
 
 
     return (
-    <div className="relative overflow-hidden rounded-2xl p-8 border border-[#1e293b] bg-[#161616]">
-
-        <p className="uppercase tracking-[0.25em] text-white text-sm font-semibold">
+    <div className="">
+        <p className="uppercase tracking-[0.25em] text-white text-xl font-semibold">
             Combustion chamber
         </p>
 

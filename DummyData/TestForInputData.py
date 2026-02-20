@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 
 
-INPUT_FILE = Path("data.csv")
+INPUT_FILE = Path("data_rewritten_fuel_sparse.csv")
 OUTPUT_FILE = Path("output.csv")
 DELAY = 0.01
 
