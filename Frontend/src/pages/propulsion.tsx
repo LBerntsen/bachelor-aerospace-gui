@@ -1,5 +1,4 @@
 import TestChart from "../components/TestChart.tsx";
-import WebSocketProvider from "../state/websocket/WebSocketProvider.tsx";
 import Header from "../components/Header.tsx"
 import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";
@@ -10,8 +9,7 @@ import TinyBarChart from "../components/BarChart.tsx";
 
 export function Propulsion(){
     return (
-        <div className=" min-h-screen flex flex-col">
-            <WebSocketProvider/>
+        <div className="bg-[#121212] min-h-screen flex flex-col">
             <Header pageName="Propulsion"/>
             <div className="flex flex-1 items-stretch">
                 <Card className="m-4 flex gap-4">

@@ -26,6 +26,15 @@ const telemetrySlice = createSlice({
     name: "telemetry",
     initialState,
     reducers: {
+        setInitialData: (state, action: PayloadAction<SensorData[]>) => {
+            action.payload.forEach((entry) => {
+               const {timeStamp, id, value} = entry;
+
+                if(!state.canMap[id.toLowerCase()])
+                    state.canMap[id.toLowerCase()] = [];
+                state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
+            });
+        },
         appendForId: (state, action: PayloadAction<SensorData>) => {
             const {timeStamp, id, value} = action.payload;
 
@@ -36,7 +45,7 @@ const telemetrySlice = createSlice({
     }
 });
 
-export const {appendForId} = telemetrySlice.actions;
+export const {setInitialData, appendForId} = telemetrySlice.actions;
 export default telemetrySlice.reducer;
 
 export function selectTelemetryValuesById(id: string)
