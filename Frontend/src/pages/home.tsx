@@ -6,6 +6,7 @@ import FuelTank from "../components/FuelTankChart.tsx";
 import CameraFeed from "../components/VideoStream.tsx";
 import { BarChart } from "recharts";
 import ChamberTemp from "../components/ChamberTemp.tsx";
+import { Card } from "../components/Card.tsx";
 
 export function Home(){
     return (
@@ -26,7 +27,9 @@ export function Home(){
                         <TextData sensorId="Pitch"/>
                         <TextData sensorId="Yaw"/>
                     </div>
-                    <TestChart sensorId="N20Den"/>
+                    <Card>
+                        <TestChart sensorId="Yaw"/>
+                    </Card>
 
             </div>
         </div>

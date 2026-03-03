@@ -10,7 +10,7 @@ import TinyBarChart from "../components/BarChart.tsx";
 
 export function Propulsion(){
     return (
-        <div className="bg-[#121212] min-h-screen flex flex-col">
+        <div className=" min-h-screen flex flex-col">
             <WebSocketProvider/>
             <Header pageName="Propulsion"/>
             <div className="flex flex-1 items-stretch">
