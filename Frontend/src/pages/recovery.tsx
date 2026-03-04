@@ -1,5 +1,4 @@
 import TestChart from "../components/TestChart.tsx";
-import WebSocketProvider from "../state/websocket/WebSocketProvider.tsx";
 import Header from "../components/Header.tsx"
 import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";
@@ -15,7 +14,6 @@ export function Recovery(){
     return(
         <>
             <div className="bg-[#121212]">
-            <WebSocketProvider/>
             <Header pageName="Recovery"/>
             </div>
             <div className="m-4">

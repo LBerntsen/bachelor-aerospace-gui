@@ -1,6 +1,8 @@
 using API.HostedServices;
 using API.Hubs;
 using Domain.Telemetry;
+using Infrastructure.Persistence;
+using Infrastructure.Workers;
 using SensorReader.Reader;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +24,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<TelemetryStore>();
 builder.Services.AddSingleton<CsvSensorReader>();
+builder.Services.AddSingleton<InfluxDbRepository>();
 builder.Services.AddHostedService<CsvSensorReaderHostedService>();
 builder.Services.AddHostedService<SignalRWorker>();
+builder.Services.AddHostedService<InfluxWorker>();
 
 var app = builder.Build();
 
