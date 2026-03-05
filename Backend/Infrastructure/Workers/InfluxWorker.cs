@@ -21,7 +21,7 @@ public class InfluxWorker : BackgroundService
         {
             try
             {
-                await _repository.WriteSensorDataAsync(data);
+                _repository.WriteSensorData(data);
             }
             catch (Exception e)
             {
