@@ -15,7 +15,6 @@ const FuelTank = ({ sensorId, fuelColor }: FuelTankProps) => {
 
     const data = useSelector(selectTelemetryValuesById(sensorId));
     const latestEntry = data?.at(-1);
-    const latestValue = latestEntry?.value ?? 0;
     const chartData = latestEntry ? [latestEntry] : [];
 
     return (

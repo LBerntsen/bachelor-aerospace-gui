@@ -27,11 +27,10 @@ export function Navbar(){
             </div>
                 <div className="sm:gap-6 flex flex-col">
                     <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Dashboard </Link>
-                    
                     <Link to ="/propulsion" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Propulsion </Link>
-                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Avionic Hardware </Link>
-                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Avionic Software</Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Avionics</Link>
                     <Link to ="/recovery" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Recovery</Link>
+                    <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Mission Archive</Link>
                     <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Settings</Link>
                 </div>
             </div>

@@ -1,12 +1,6 @@
-import TestChart from "../components/TestChart.tsx";
-import WebSocketProvider from "../state/websocket/WebSocketProvider.tsx";
 import Header from "../components/Header.tsx"
-import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";
-import ChamberTemp from "../components/ChamberTemp.tsx";
-import CameraFeed from "../components/VideoStream.tsx";
 import { Card } from "../components/Card.tsx";
-import TinyBarChart from "../components/BarChart.tsx";
 import RecoveryStatus from "../components/RecoveryStatus.tsx";
 import TinyChart from "../components/TinyChart.tsx";
 import EventLog from "../components/EventLog.tsx";
@@ -15,7 +9,6 @@ export function Recovery(){
     return(
         <>
             <div className="bg-[#121212]">
-            <WebSocketProvider/>
             <Header pageName="Recovery"/>
             </div>
             <div className="m-4">

@@ -3,7 +3,6 @@ import Header from "../components/Header.tsx"
 import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";
 import ChamberTemp from "../components/ChamberTemp.tsx";
-import CameraFeed from "../components/VideoStream.tsx";
 import { Card } from "../components/Card.tsx";
 import TinyBarChart from "../components/BarChart.tsx";
 

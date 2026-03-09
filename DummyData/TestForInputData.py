@@ -3,9 +3,9 @@ import time
 from pathlib import Path
 
 
-INPUT_FILE = Path("data_rewritten_fuel_sparse.csv")
+INPUT_FILE = Path("data.csv")
 OUTPUT_FILE = Path("output.csv")
-DELAY = 0.01
+DELAY = 0
 
 
 def copy_csv(input_path: Path, output_path: Path, delay: float = 0.0) -> None:
