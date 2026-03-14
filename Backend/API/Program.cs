@@ -1,3 +1,4 @@
+using System.Net;
 using API.HostedServices;
 using API.Hubs;
 using Domain.Interfaces;
@@ -12,9 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("SignalRPolicy", policy =>
+    options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.SetIsOriginAllowed(_ => true)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -37,7 +38,25 @@ builder.Services.AddSingleton<SystemStateService>();
 
 var app = builder.Build();
 
-app.UseCors("SignalRPolicy");
+app.UseCors();
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/api"))
+    {
+        var remoteIp = context.Connection.RemoteIpAddress;
+
+        if (!IPAddress.IsLoopback(remoteIp))
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            await context.Response.WriteAsync("Access denied: only localhost allowed");
+            return;
+        }
+    }
+
+    await next();
+});
+
 app.MapHub<TelemetryHub>("/telemetryhub");
 app.MapControllers();
 
