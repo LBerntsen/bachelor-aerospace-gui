@@ -8,6 +8,7 @@ public class TelemetryStore
     private readonly ConcurrentQueue<SensorData> _data = new();
 
     public event Action<SensorData>? OnUpdate;
+    public event Action? OnClear;
     
     public IReadOnlyCollection<SensorData> GetAll() => _data;
 
@@ -15,5 +16,11 @@ public class TelemetryStore
     {
         _data.Enqueue(item);
         OnUpdate?.Invoke(item);
+    }
+
+    public void Clear()
+    {
+        _data.Clear();
+        OnClear?.Invoke();
     }
 }

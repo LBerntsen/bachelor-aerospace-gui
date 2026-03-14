@@ -12,7 +12,7 @@ public class InfluxDbRepository : IDisposable
     private readonly WriteApi _writeApi;
     private readonly string _bucket;
     private readonly string _org;
-    private readonly string _sessionId;
+    private string _sessionId;
 
     public InfluxDbRepository(IConfiguration config)
     {
@@ -34,12 +34,15 @@ public class InfluxDbRepository : IDisposable
             FlushInterval = 1000,
             RetryInterval = 3000
         });
-        
-        _sessionId = $"session_{DateTime.Now:yyyy-MM-dd_HH-mm}";
     }
     
     public void Dispose() => _client.Dispose();
 
+    public void StartNewSession()
+    {
+        _sessionId = $"session_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
+    }
+    
     public void WriteSensorData(SensorData data)
     {
         var point = PointData
@@ -63,6 +66,33 @@ public class InfluxDbRepository : IDisposable
         return tables
             .SelectMany(table => table.Records)
             .Select(record => record.GetValue().ToString() ?? "Unknown Session")
+            .ToList();
+    }
+
+    public async Task<List<SensorData>> GetSessionDataAsync(string sessionId)
+    {
+        var query = $@"
+        import ""influxdata/influxdb/v1""
+        from(bucket: ""{_bucket}"")
+        |> range(start: 0)
+        |> filter(fn: (r) => r.session_id == ""{sessionId}"")
+        |> v1.fieldsAsCols()
+        |> group()
+        |> sort(columns: [""_time""])";
+    
+        var tables = await _client.GetQueryApi().QueryAsync(query, _org);
+
+        return tables
+            .SelectMany(table => table.Records)
+            .Select(record => {
+                var time = record.GetTime()?.ToDateTimeUtc().ToString("O") ?? DateTime.UtcNow.ToString("O");
+                var id = record.GetValueByKey("sensor_id")?.ToString() ?? "unknown";
+                
+                var val = record.GetValueByKey("value");
+                double doubleVal = val != null ? Convert.ToDouble(val) : 0.0;
+                
+                return new SensorData(time, id, doubleVal);
+            })
             .ToList();
     }
 }
