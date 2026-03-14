@@ -41,11 +41,14 @@ const telemetrySlice = createSlice({
             if(!state.canMap[id.toLowerCase()])
                 state.canMap[id.toLowerCase()] = [];
             state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
+        },
+        clear: (state) => {
+            state.canMap = {};
         }
     }
 });
 
-export const {setInitialData, appendForId} = telemetrySlice.actions;
+export const {setInitialData, appendForId, clear} = telemetrySlice.actions;
 export default telemetrySlice.reducer;
 
 export function selectTelemetryValuesById(id: string)

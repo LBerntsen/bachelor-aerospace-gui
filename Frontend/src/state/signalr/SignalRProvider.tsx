@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {startSignalR} from "./SignalR.ts";
-import {appendForId, setInitialData} from "../telemetry/telemetrySlice.ts";
+import {appendForId, clear, setInitialData} from "../telemetry/telemetrySlice.ts";
 import type {SensorDataDto} from "./SignalRData.ts";
 
 export default function SignalRProvider()
@@ -18,8 +18,13 @@ export default function SignalRProvider()
         dispatch(appendForId({timeStamp: dataEntry.timeStamp, id: dataEntry.id, value: dataEntry.value}));
     }
 
+    function onClear()
+    {
+        dispatch(clear());
+    }
+
     useEffect(() => {
-        startSignalR(onInitialData, onUpdate);
+        startSignalR(onInitialData, onUpdate, onClear);
     }, [dispatch]);
 
     return null;
