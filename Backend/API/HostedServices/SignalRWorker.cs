@@ -1,5 +1,4 @@
 using API.Hubs;
-using Domain.Models;
 using Domain.Telemetry;
 using Microsoft.AspNetCore.SignalR;
 
@@ -22,6 +21,12 @@ public class SignalRWorker : BackgroundService
         {
             await _hubContext.Clients.All.SendAsync("update", data, stoppingToken);
         };
+
+        _store.OnClear += async () =>
+        {
+            await _hubContext.Clients.All.SendAsync("clear", stoppingToken);
+        };
+        
         return Task.CompletedTask;
     }
 }
