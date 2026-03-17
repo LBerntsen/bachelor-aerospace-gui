@@ -15,11 +15,13 @@ interface SensorEntry
 }
 
 interface telemetryState {
-    canMap: Record<string, SensorEntry[]>
+    canMap: Record<string, SensorEntry[]>,
+    state: string
 }
 
 const initialState: telemetryState = {
-    canMap: {}
+    canMap: {},
+    state: "Offline"
 }
 
 const telemetrySlice = createSlice({
@@ -42,13 +44,16 @@ const telemetrySlice = createSlice({
                 state.canMap[id.toLowerCase()] = [];
             state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
         },
+        setState: (state, action: PayloadAction<string>) => {
+            state.state = action.payload;
+        },
         clear: (state) => {
             state.canMap = {};
         }
     }
 });
 
-export const {setInitialData, appendForId, clear} = telemetrySlice.actions;
+export const {setInitialData, appendForId, setState, clear} = telemetrySlice.actions;
 export default telemetrySlice.reducer;
 
 export function selectTelemetryValuesById(id: string)
@@ -64,5 +69,13 @@ export function selectLatestTelemetryValueById(id: string)
     return function (state: RootState): SensorEntry
     {
         return state.telemetry.canMap[id.toLowerCase()]?.at(-1) ?? {timeStamp: new Date().getTime(), value: -1};
+    }
+}
+
+export function selectState()
+{
+    return function(state: RootState): string
+    {
+        return state.telemetry.state;
     }
 }

@@ -11,7 +11,7 @@ public class SystemStateService
 {
     private SystemState _currentState = SystemState.Idle;
     
-    public event EventHandler<SystemState>? OnStateChanged;
+    public event Action<SystemState>? OnStateChanged;
 
     public SystemState CurrentState
     {
@@ -21,7 +21,7 @@ public class SystemStateService
             if (_currentState != value)
             {
                 _currentState = value;
-                OnStateChanged?.Invoke(this, _currentState);
+                OnStateChanged?.Invoke(_currentState);
             }
         }
     }

@@ -23,7 +23,7 @@ public class InfluxWorker : BackgroundService
         _repository = repository;
     }
 
-    private void HandleModeChanged(object? sender, SystemState newState)
+    private void HandleModeChanged(SystemState newState)
     {
         if (newState == SystemState.Live)
             StartWork();

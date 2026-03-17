@@ -1,7 +1,8 @@
 import {Link} from "react-router-dom"
 import phoenixLogo from "../assets/Pheonix_logo.jpg";
 import aerospaceLogo from "../assets/Aerospace_logo.png";
-import IsRunning from "./IsRunning";
+import {selectState} from "../state/telemetry/telemetrySlice.ts";
+import {useSelector} from "react-redux";
 
 
 
@@ -14,9 +15,9 @@ export function Navbar(){
             <div className="flex flex-row items-center font-bold">
                 <img className="rounded-lg" width={64}src={phoenixLogo}/>
                 <div>
-                    <div className="flex justify-center gap-4 ">
+                    <div className="flex justify-center gap-4 items-center">
                         <h1 className="text-white text-xl">Phoenix 2</h1>
-                        <IsRunning sensorId="isRunning"/>
+                        <BackendState/>
                     </div>
                     <h1 className="text-white text-xs ">Ground Control System</h1>
                 </div>
@@ -37,4 +38,16 @@ export function Navbar(){
         </div>
         </>
     )
+}
+
+function BackendState()
+{
+    const state = useSelector(selectState());
+    const color = state === "Offline" ? "text-red-500" : "text-green-400";
+
+    return (
+        <div className="flex items-center">
+            <p className={`text-sm font-semibold ${color}`}>{state}</p>
+        </div>
+    );
 }

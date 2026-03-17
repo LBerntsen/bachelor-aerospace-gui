@@ -18,12 +18,6 @@ public class StateController : ControllerBase
         _sourceController = sourceController;
     }
 
-    [HttpGet]
-    public string GetState()
-    {
-        return _stateService.CurrentState.ToString();
-    }
-
     [HttpPost("stop")]
     public async Task<IActionResult> Stop()
     {
