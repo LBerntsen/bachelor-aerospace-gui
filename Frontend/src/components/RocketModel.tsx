@@ -21,7 +21,7 @@ export default function RocketModel({ sensorIdRoll, sensorIdPitch, sensorIdYaw }
     const yaw = ((yawEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
 
 
-    const { scene } = useGLTF("/rockett.glb");
+    const { scene } = useGLTF("/rocket.glb");
 
     return (
     <group scale={0.01} rotation={[pitch, yaw, roll]} rotation-order="ZYX">

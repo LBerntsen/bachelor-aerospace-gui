@@ -1,0 +1,19 @@
+services:
+  influxdb:
+    image: influxdb:2.7.5
+    container_name: phoenix_influx_local
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=aerospace123
+      - DOCKER_INFLUXDB_INIT_ORG=UiSAerospace
+      - DOCKER_INFLUXDB_INIT_BUCKET=PhoenixLocal
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-local-token
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    restart: unless-stopped
+
+volumes:
+  influxdb-data:
