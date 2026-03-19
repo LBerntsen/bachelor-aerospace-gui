@@ -58,14 +58,17 @@ public class InfluxDbRepository : IDisposable
     public async Task<List<string>> GetSessionsAsync()
     {
         var query = $@"
-            import ""influxdata/influxdb/v1""
-            v1.tagValues(bucket: ""{_bucket}"", tag: ""session_id"")";
+            from(bucket: ""{_bucket}"")
+            |> range(start: 0)
+            |> keep(columns: [""session_id""])
+            |> distinct(column: ""session_id"")";
 
         var tables = await _client.GetQueryApi().QueryAsync(query, _org);
 
         return tables
             .SelectMany(table => table.Records)
-            .Select(record => record.GetValue().ToString() ?? "Unknown Session")
+            .Select(record => record.GetValueByKey("session_id")?.ToString())
+            .Where(s => !string.IsNullOrEmpty(s))
             .ToList();
     }
 
