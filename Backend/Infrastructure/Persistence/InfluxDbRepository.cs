@@ -8,35 +8,62 @@ namespace Infrastructure.Persistence;
 
 public class InfluxDbRepository : IDisposable
 {
-    private readonly InfluxDBClient _client;
-    private readonly WriteApi _writeApi;
-    private readonly string _bucket;
-    private readonly string _org;
+    private readonly InfluxDBClient _localClient;
+    private readonly WriteApi _localApi;
+    private readonly string _localBucket;
+    private readonly string _localOrg;
+    
+    private readonly InfluxDBClient _cloudClient;
+    private readonly WriteApi _cloudApi;
+    private readonly string _cloudBucket;
+    private readonly string _cloudOrg;
+    
     private string _sessionId;
 
     public InfluxDbRepository(IConfiguration config)
     {
-        var url = config["InfluxDB:Url"] ?? "http://localhost:8086";
-        var token = config["InfluxDB:Token"];
-        _bucket = config["InfluxDB:Bucket"];
-        _org = config["InfluxDB:Org"];
+        var localUrl = config["InfluxDBLocal:Url"] ?? "http://localhost:8086";
+        var localToken = config["InfluxDBLocal:Token"];
+        _localBucket = config["InfluxDBLocal:Bucket"];
+        _localOrg = config["InfluxDBLocal:Org"];
 
-        var options = new InfluxDBClientOptions.Builder()
-            .Url(url)
-            .AuthenticateToken(token.ToCharArray())
+        var localOptions = new InfluxDBClientOptions.Builder()
+            .Url(localUrl)
+            .AuthenticateToken(localToken.ToCharArray())
             .Build();
 
-        _client = InfluxDBClientFactory.Create(options);
-        
-        _writeApi = _client.GetWriteApi(new WriteOptions
+        _localClient = InfluxDBClientFactory.Create(localOptions);
+        _localApi = _localClient.GetWriteApi(new WriteOptions
         {
             BatchSize = 50,
             FlushInterval = 1000,
             RetryInterval = 3000
         });
+        
+        var cloudUrl = config["InfluxDBCloud:Url"];
+        var cloudToken = config["InfluxDBCloud:Token"];
+        _cloudBucket = config["InfluxDBCloud:Bucket"];
+        _cloudOrg = config["InfluxDBCloud:Org"];
+
+        var cloudOptions = new InfluxDBClientOptions.Builder()
+            .Url(cloudUrl)
+            .AuthenticateToken(cloudToken.ToCharArray())
+            .Build();
+
+        _cloudClient = InfluxDBClientFactory.Create(cloudOptions);
+        _cloudApi = _cloudClient.GetWriteApi(new WriteOptions
+        {
+            BatchSize = 500,
+            FlushInterval = 10000,
+            RetryInterval = 3000
+        });
     }
     
-    public void Dispose() => _client.Dispose();
+    public void Dispose()
+    {
+        _localClient.Dispose();
+        _cloudClient.Dispose();
+    }
 
     public void StartNewSession()
     {
@@ -52,18 +79,19 @@ public class InfluxDbRepository : IDisposable
             .Field("value", data.Value)
             .Timestamp(DateTime.Parse(data.TimeStamp).ToUniversalTime(), WritePrecision.Ns);
         
-        _writeApi.WritePoint(point, _bucket, _org);
+        _localApi.WritePoint(point, _localBucket, _localOrg);
+        _cloudApi.WritePoint(point, _cloudBucket, _cloudOrg);
     }
 
     public async Task<List<string>> GetSessionsAsync()
     {
         var query = $@"
-            from(bucket: ""{_bucket}"")
+            from(bucket: ""{_localBucket}"")
             |> range(start: 0)
             |> keep(columns: [""session_id""])
             |> distinct(column: ""session_id"")";
 
-        var tables = await _client.GetQueryApi().QueryAsync(query, _org);
+        var tables = await _localClient.GetQueryApi().QueryAsync(query, _localOrg);
 
         return tables
             .SelectMany(table => table.Records)
@@ -76,14 +104,14 @@ public class InfluxDbRepository : IDisposable
     {
         var query = $@"
         import ""influxdata/influxdb/v1""
-        from(bucket: ""{_bucket}"")
+        from(bucket: ""{_localBucket}"")
         |> range(start: 0)
         |> filter(fn: (r) => r.session_id == ""{sessionId}"")
         |> v1.fieldsAsCols()
         |> group()
         |> sort(columns: [""_time""])";
     
-        var tables = await _client.GetQueryApi().QueryAsync(query, _org);
+        var tables = await _localClient.GetQueryApi().QueryAsync(query, _localOrg);
 
         return tables
             .SelectMany(table => table.Records)
