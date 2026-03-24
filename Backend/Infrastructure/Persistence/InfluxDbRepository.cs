@@ -32,13 +32,15 @@ public class InfluxDbRepository : IDisposable
             .AuthenticateToken(localToken.ToCharArray())
             .Build();
 
-        _localClient = InfluxDBClientFactory.Create(localOptions);
-        _localApi = _localClient.GetWriteApi(new WriteOptions
+        WriteOptions realtimeWriteOptions = new WriteOptions
         {
             BatchSize = 50,
             FlushInterval = 1000,
             RetryInterval = 3000
-        });
+        };
+
+        _localClient = InfluxDBClientFactory.Create(localOptions);
+        _localApi = _localClient.GetWriteApi(realtimeWriteOptions);
         
         var cloudUrl = config["InfluxDBCloud:Url"];
         var cloudToken = config["InfluxDBCloud:Token"];
@@ -51,12 +53,7 @@ public class InfluxDbRepository : IDisposable
             .Build();
 
         _cloudClient = InfluxDBClientFactory.Create(cloudOptions);
-        _cloudApi = _cloudClient.GetWriteApi(new WriteOptions
-        {
-            BatchSize = 500,
-            FlushInterval = 10000,
-            RetryInterval = 3000
-        });
+        _cloudApi = _cloudClient.GetWriteApi(realtimeWriteOptions);
     }
     
     public void Dispose()
@@ -123,6 +120,39 @@ public class InfluxDbRepository : IDisposable
                 double doubleVal = val != null ? Convert.ToDouble(val) : 0.0;
                 
                 return new SensorData(time, id, doubleVal);
+            })
+            .ToList();
+    }
+
+    public async Task<List<SensorData>> GetCurrentSessionDataAsync()
+    {
+        if (string.IsNullOrEmpty(_sessionId))
+            return new List<SensorData>();
+        return await GetSessionDataAsync(_sessionId);
+    }
+
+    public async Task<List<SensorData>> PollRecentDataAsync(int secondsBack)
+    {
+        var query = $@"
+        import ""influxdata/influxdb/v1""
+        from(bucket: ""{_cloudBucket}"")
+        |> range(start: -{secondsBack}s) 
+        |> filter(fn: (r) => r._measurement == ""telemetry"")
+        |> filter(fn: (r) => r.session_id == ""{_sessionId}"")
+        |> v1.fieldsAsCols()
+        |> group()
+        |> sort(columns: [""_time""])";
+
+        var tables = await _cloudClient.GetQueryApi().QueryAsync(query, _cloudOrg);
+
+        return tables
+            .SelectMany(table => table.Records)
+            .Select(record =>
+            {
+                var time = record.GetTime()?.ToDateTimeUtc().ToString("O") ?? DateTime.UtcNow.ToString("O");
+                var id = record.GetValueByKey("sensor_id")?.ToString() ?? "Unknown";
+                var val = record.GetValueByKey("value");
+                return new SensorData(time, id, val != null ? Convert.ToDouble(val) : 0.0);
             })
             .ToList();
     }
