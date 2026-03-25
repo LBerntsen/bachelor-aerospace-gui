@@ -30,19 +30,29 @@ const telemetrySlice = createSlice({
     reducers: {
         setInitialData: (state, action: PayloadAction<SensorData[]>) => {
             action.payload.forEach((entry) => {
-               const {timeStamp, id, value} = entry;
+                const id = entry.id.toLowerCase();
+                const timeMs = new Date(entry.timeStamp).getTime();
 
-                if(!state.canMap[id.toLowerCase()])
-                    state.canMap[id.toLowerCase()] = [];
-                state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
+                if(!state.canMap[id])
+                    state.canMap[id] = [];
+
+                state.canMap[id].push({timeStamp: timeMs, value: entry.value});
             });
         },
         appendForId: (state, action: PayloadAction<SensorData>) => {
-            const {timeStamp, id, value} = action.payload;
+            const id = action.payload.id.toLowerCase();
+            const timeMs = new Date(action.payload.timeStamp).getTime();
 
-            if(!state.canMap[id.toLowerCase()])
-                state.canMap[id.toLowerCase()] = [];
-            state.canMap[id.toLowerCase()].push({timeStamp: new Date(timeStamp).getTime(), value: value})
+            if(!state.canMap[id])
+                state.canMap[id] = [];
+
+            // Sjekk etter duplikater
+            const isDuplicate = state.canMap[id]
+                .slice(-50)
+                .some(entry => entry.timeStamp === timeMs);
+
+            if(!isDuplicate)
+                state.canMap[id].push({timeStamp: timeMs, value: action.payload.value});
         },
         setState: (state, action: PayloadAction<string>) => {
             state.state = action.payload;
