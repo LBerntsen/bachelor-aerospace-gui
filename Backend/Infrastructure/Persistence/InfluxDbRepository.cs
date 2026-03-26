@@ -97,6 +97,23 @@ public class InfluxDbRepository : IDisposable
             .ToList();
     }
 
+    public async Task<string?> GetLatestSessionIdAsync()
+    {
+        var query = $@"
+            from(bucket: ""{_cloudBucket}"")
+            |> range(start: -7d) 
+            |> filter(fn: (r) => r._measurement == ""telemetry"")
+            |> last() 
+            |> keep(columns: [""session_id""])";
+
+        var tables = await _cloudClient.GetQueryApi().QueryAsync(query, _cloudOrg);
+
+        return tables
+            .SelectMany(table => table.Records)
+            .Select(record => record.GetValueByKey("session_id")?.ToString())
+            .FirstOrDefault();
+    }
+
     public async Task<List<SensorData>> GetSessionDataAsync(string sessionId)
     {
         var query = $@"
@@ -126,9 +143,11 @@ public class InfluxDbRepository : IDisposable
 
     public async Task<List<SensorData>> GetCurrentSessionDataAsync()
     {
-        if (string.IsNullOrEmpty(_sessionId))
+        string sessionId = await GetLatestSessionIdAsync();
+        
+        if (string.IsNullOrEmpty(sessionId))
             return new List<SensorData>();
-        return await GetSessionDataAsync(_sessionId);
+        return await GetSessionDataAsync(sessionId);
     }
 
     public async Task<List<SensorData>> PollRecentDataAsync(int secondsBack)

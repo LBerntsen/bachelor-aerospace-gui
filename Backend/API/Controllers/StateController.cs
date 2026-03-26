@@ -1,3 +1,4 @@
+using API.Attributes;
 using Domain.Enums;
 using Domain.Services;
 using Infrastructure.DataIngestion;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[OperatorOnly]
 [ApiController]
 [Route("api/[controller]")]
 public class StateController : ControllerBase

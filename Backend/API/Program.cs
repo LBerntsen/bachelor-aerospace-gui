@@ -1,4 +1,5 @@
 using System.Net;
+using API.Extensions;
 using API.HostedServices;
 using API.Hubs;
 using Domain.Interfaces;
@@ -10,6 +11,8 @@ using Infrastructure.Persistence;
 using Infrastructure.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+bool isSponsor = builder.Configuration.IsSponsorMode();
 
 builder.Services.AddCors(options =>
 {
@@ -24,40 +27,49 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+if (!isSponsor)
+{
+    builder.Services.AddSignalR();
+    builder.Services.AddSingleton<ITelemetrySource, CsvSource>();
+    builder.Services.AddSingleton<ITelemetrySource, InfluxSource>();
+    builder.Services.AddHostedService<SignalRWorker>();
+    builder.Services.AddHostedService<InfluxWorker>();
+    builder.Services.AddSingleton<SystemStateService>();
+    builder.Services.AddSingleton<SourceController>();
+    builder.Services.AddSingleton<TelemetryStore>();
+}
+
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
-builder.Services.AddSingleton<TelemetryStore>();
 builder.Services.AddSingleton<InfluxDbRepository>();
-builder.Services.AddSingleton<ITelemetrySource, CsvSource>();
-builder.Services.AddSingleton<ITelemetrySource, InfluxSource>();
-builder.Services.AddSingleton<SourceController>();
-builder.Services.AddHostedService<SignalRWorker>();
-builder.Services.AddHostedService<InfluxWorker>();
-builder.Services.AddSingleton<SystemStateService>();
 
 var app = builder.Build();
 
 app.UseCors();
 
-app.Use(async (context, next) =>
+if (!isSponsor)
 {
-    if (context.Request.Path.StartsWithSegments("/api"))
+    app.Use(async (context, next) =>
     {
-        var remoteIp = context.Connection.RemoteIpAddress;
-
-        if (!IPAddress.IsLoopback(remoteIp))
+        if (context.Request.Path.StartsWithSegments("/api"))
         {
-            context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            await context.Response.WriteAsync("Access denied: only localhost allowed");
-            return;
+            var remoteIp = context.Connection.RemoteIpAddress;
+
+            if (!IPAddress.IsLoopback(remoteIp))
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                await context.Response.WriteAsync("Access denied: only localhost allowed");
+                return;
+            }
         }
-    }
 
-    await next();
-});
+        await next();
+    });
+    
+    app.MapHub<TelemetryHub>("/telemetryhub");
+}
 
-app.MapHub<TelemetryHub>("/telemetryhub");
 app.MapControllers();
 
 // Configure the HTTP request pipeline.

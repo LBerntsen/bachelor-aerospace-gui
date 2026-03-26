@@ -1,9 +1,11 @@
+using API.Attributes;
 using Domain.Models;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[SponsorOnly]
 [ApiController]
 [Route("api/[controller]")]
 public class SponsorController : ControllerBase
