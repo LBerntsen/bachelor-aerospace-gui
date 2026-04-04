@@ -1,9 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 import { useSelector } from "react-redux";
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
-import { useMemo } from "react";
-import { useRef } from "react";
-import * as THREE from "three";
 
 type Props = {
   sensorIdRoll: string;
@@ -19,7 +16,6 @@ export default function RocketModel({ sensorIdRoll, sensorIdPitch, sensorIdYaw }
     const roll = ((rollEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
     const pitch = ((pitchEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
     const yaw = ((yawEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
-
 
     const { scene } = useGLTF("/rocket.glb");
 

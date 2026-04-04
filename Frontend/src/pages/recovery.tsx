@@ -1,4 +1,3 @@
-import TestChart from "../components/TestChart.tsx";
 import Header from "../components/Header.tsx"
 import TextData from "../components/TextData.tsx";
 import { Card } from "../components/Card.tsx";

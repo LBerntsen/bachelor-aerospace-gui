@@ -1,8 +1,9 @@
 import {HubConnectionBuilder} from "@microsoft/signalr";
 import type {SensorDataDto} from "../telemetry/Dtos/SensorData.ts";
+import {backendUrl} from "../utility.ts";
 
 export const connection = new HubConnectionBuilder()
-    .withUrl("http://localhost:5074/telemetryhub")
+    .withUrl(`${backendUrl}/telemetryhub`)
     .withAutomaticReconnect()
     .build();
 

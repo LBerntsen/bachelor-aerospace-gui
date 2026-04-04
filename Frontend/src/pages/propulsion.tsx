@@ -1,4 +1,3 @@
-import TestChart from "../components/TestChart.tsx";
 import Header from "../components/Header.tsx"
 import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";

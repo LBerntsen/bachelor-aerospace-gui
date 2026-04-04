@@ -1,7 +1,6 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useSelector } from "react-redux";
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
-
 
 type TestChartProps = {
   sensorId: string;
@@ -12,8 +11,6 @@ const TestChart = ({ sensorId }: TestChartProps) => {
 const data = useSelector(selectTelemetryValuesById(sensorId));
 
 const latestValue = data[data.length - 1]?.value;
-
-
 
   return (
       <div className="relative w-full h-80 rounded-2xl bg-[#161616] p-5 border border-[#1e293b]">

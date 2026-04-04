@@ -10,9 +10,9 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class SponsorController : ControllerBase
 {
-    private readonly InfluxDbRepository _repository;
+    private readonly InfluxSponsorDbRepository _repository;
 
-    public SponsorController(InfluxDbRepository repository)
+    public SponsorController(InfluxSponsorDbRepository repository)
     {
         _repository = repository;
     }

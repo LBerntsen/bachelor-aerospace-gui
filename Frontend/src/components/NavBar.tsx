@@ -1,11 +1,7 @@
 import {Link} from "react-router-dom"
 import phoenixLogo from "../assets/Pheonix_logo.jpg";
-import aerospaceLogo from "../assets/Aerospace_logo.png";
 import {selectState} from "../state/telemetry/telemetrySlice.ts";
 import {useSelector} from "react-redux";
-
-
-
 
 export function Navbar(){
     return (

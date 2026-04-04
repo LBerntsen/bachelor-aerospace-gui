@@ -9,9 +9,9 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class ReplayController : ControllerBase
 {
-    private readonly InfluxDbRepository _repository;
+    private readonly InfluxOperatorDbRepository _repository;
 
-    public ReplayController(InfluxDbRepository repository)
+    public ReplayController(InfluxOperatorDbRepository repository)
     {
         _repository = repository;
     }

@@ -2,7 +2,7 @@ import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {startSignalR} from "./SignalR.ts";
 import {appendForId, clear, setInitialData, setState} from "../telemetry/telemetrySlice.ts";
-import type {SensorDataDto} from "./SignalRData.ts";
+import type {SensorDataDto} from "../telemetry/Dtos/SensorData.ts";
 
 export default function SignalRProvider()
 {

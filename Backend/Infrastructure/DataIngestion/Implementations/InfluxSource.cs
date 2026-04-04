@@ -9,14 +9,14 @@ namespace Infrastructure.DataIngestion.Implementations;
 
 public class InfluxSource : ITelemetrySource
 {
-    private readonly InfluxDbRepository _repository;
+    private readonly InfluxSponsorDbRepository _repository;
     private readonly TelemetryStore _store;
     private readonly SystemStateService _stateService;
     private CancellationTokenSource? _cancellationTokenSource;
     
     public DataSource Type { get; } = DataSource.Influx;
 
-    public InfluxSource(InfluxDbRepository repository, TelemetryStore store, SystemStateService stateService)
+    public InfluxSource(InfluxSponsorDbRepository repository, TelemetryStore store, SystemStateService stateService)
     {
         _repository = repository;
         _store = store;

@@ -38,11 +38,12 @@ if (!isSponsor)
     builder.Services.AddSingleton<SystemStateService>();
     builder.Services.AddSingleton<SourceController>();
     builder.Services.AddSingleton<TelemetryStore>();
+    builder.Services.AddSingleton<InfluxOperatorDbRepository>();
 }
 
+builder.Services.AddSingleton<InfluxSponsorDbRepository>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
-builder.Services.AddSingleton<InfluxDbRepository>();
 
 var app = builder.Build();
 

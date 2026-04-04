@@ -1,10 +1,6 @@
-import { BarChart, Bar, ResponsiveContainer, CartesianGrid,YAxis } from 'recharts';
+import { BarChart, Bar, ResponsiveContainer,YAxis } from 'recharts';
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
 import { useSelector } from "react-redux";
-import { Card } from './Card';
-import TextData from './TextData';
-
-
 
 type FuelTankProps = {
   sensorId: string;

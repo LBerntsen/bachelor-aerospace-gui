@@ -12,9 +12,9 @@ public class InfluxWorker : BackgroundService
     private CancellationTokenSource? _workerTokenSource;
     
     private readonly TelemetryStore _store;
-    private readonly InfluxDbRepository _repository;
+    private readonly InfluxOperatorDbRepository _repository;
 
-    public InfluxWorker(SystemStateService stateService, TelemetryStore store, InfluxDbRepository repository)
+    public InfluxWorker(SystemStateService stateService, TelemetryStore store, InfluxOperatorDbRepository repository)
     {
         _stateService = stateService;
         _stateService.OnStateChanged += HandleModeChanged;

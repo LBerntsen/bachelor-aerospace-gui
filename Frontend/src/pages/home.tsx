@@ -1,10 +1,4 @@
-import TestChart from "../components/TestChart.tsx";
-import Header from "../components/Header.tsx"
 import TextData from "../components/TextData.tsx";
-import FuelTank from "../components/FuelTankChart.tsx";
-import CameraFeed from "../components/VideoStream.tsx";
-import { BarChart } from "recharts";
-import ChamberTemp from "../components/ChamberTemp.tsx";
 import { Card } from "../components/Card.tsx";
 import  RocketScene  from "../components/RocketScene.tsx"
 import DirectionText from "../components/DirectionText.tsx";
