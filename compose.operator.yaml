@@ -16,13 +16,14 @@ services:
     container_name: phoenix_local_api
     ports:
       - "127.0.0.1:8087:8080"
+      - "127.0.0.1:8088:8088"
     environment:
       - AppMode=Operator
       - InfluxDBLocal__Url=http://phoenix_influx_local:8086
       - InfluxDBLocal__Token=my-super-secret-local-token
       - InfluxDBLocal__Org=UiSAerospace
       - InfluxDBLocal__Bucket=PhoenixLocal
-      - InfluxDBCloud__Url=http://some-cloud-url:8087
+      - InfluxDBCloud__Url=http://192.168.0.184:8086
       - InfluxDBCloud__Token=my-super-secret-cloud-token
       - InfluxDBCloud__Org=UiSAerospace
       - InfluxDBCloud__Bucket=PhoenixCloud

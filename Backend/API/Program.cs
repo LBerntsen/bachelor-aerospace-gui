@@ -31,6 +31,7 @@ builder.Services.AddCors(options =>
 if (!isSponsor)
 {
     builder.Services.AddSignalR();
+    builder.Services.AddSingleton<ITelemetrySource, TcpSource>();
     builder.Services.AddSingleton<ITelemetrySource, CsvSource>();
     builder.Services.AddSingleton<ITelemetrySource, InfluxSource>();
     builder.Services.AddHostedService<SignalRWorker>();

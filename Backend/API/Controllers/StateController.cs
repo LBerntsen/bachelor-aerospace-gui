@@ -32,7 +32,7 @@ public class StateController : ControllerBase
     public async Task<IActionResult> Live()
     {
         _stateService.CurrentState = SystemState.Live;
-        await _sourceController.SwitchTo(DataSource.Csv);
+        await _sourceController.SwitchTo(DataSource.Tcp);
         return Ok();
     }
     
