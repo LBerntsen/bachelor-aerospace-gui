@@ -51,23 +51,6 @@ app.UseCors();
 
 if (!isSponsor)
 {
-    app.Use(async (context, next) =>
-    {
-        if (context.Request.Path.StartsWithSegments("/api"))
-        {
-            var remoteIp = context.Connection.RemoteIpAddress;
-
-            if (!IPAddress.IsLoopback(remoteIp))
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                await context.Response.WriteAsync("Access denied: only localhost allowed");
-                return;
-            }
-        }
-
-        await next();
-    });
-    
     app.MapHub<TelemetryHub>("/telemetryhub");
 }
 

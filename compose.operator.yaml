@@ -15,7 +15,7 @@ services:
     build: ./Backend
     container_name: phoenix_local_api
     ports:
-      - "8087:8080"
+      - "127.0.0.1:8087:8080"
     environment:
       - AppMode=Operator
       - InfluxDBLocal__Url=http://phoenix_influx_local:8086
