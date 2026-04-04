@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {useEffect, useRef} from "react";
 import type {SensorDataDto} from "../telemetry/Dtos/SensorData.ts";
-import {appendForId, setInitialData} from "../telemetry/telemetrySlice.ts";
+import {appendForId, setInitialData, setState} from "../telemetry/telemetrySlice.ts";
 import {backendUrl} from "../utility.ts";
 
 export default function SponsorDataProvider()
@@ -17,10 +17,12 @@ export default function SponsorDataProvider()
              const response = await fetch(`${backendUrl}/api/sponsor/live`);
              const data: SensorDataDto[] = await response.json();
              dispatch(setInitialData(data));
+             dispatch(setState("Live"));
          }
          catch (e)
          {
              console.error("Could not fetch initial data", e);
+             dispatch(setState("Offline"));
          }
      }
 
@@ -30,10 +32,12 @@ export default function SponsorDataProvider()
              const response = await fetch(`${backendUrl}/api/sponsor/live?secondsBack=${secondsBack}`);
              const data: SensorDataDto[] = await response.json();
              data.forEach((entry) => dispatch(appendForId({timeStamp: entry.timeStamp, id: entry.id, value: entry.value})));
+             dispatch(setState("Live"));
          }
          catch (e)
          {
              console.error("Polling failed", e);
+             dispatch(setState("Offline"));
          }
      }
 
