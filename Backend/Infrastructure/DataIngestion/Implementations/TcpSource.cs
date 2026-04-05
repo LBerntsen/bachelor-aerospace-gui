@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -75,9 +76,12 @@ public class TcpSource : ITelemetrySource
     private void ProcessLine(string line)
     {
         var parts = line.Split(";");
+
+        var norwegianCulture = CultureInfo.GetCultureInfo("nb-NO");
+        
         double value = 0;
             
-        if (double.TryParse(parts[3], out var doubleVal))
+        if (double.TryParse(parts[3], NumberStyles.Any, norwegianCulture, out var doubleVal))
             value = doubleVal;
         else if (bool.TryParse(parts[3], out var boolVal))
             value = boolVal ? 1 : 0;
