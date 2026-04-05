@@ -1,11 +1,11 @@
 import Header from "../components/Header.tsx"
 import TextData from "../components/TextData.tsx";
-import { Card } from "../components/Card.tsx";
 import RecoveryStatus from "../components/RecoveryStatus.tsx";
 import TinyChart from "../components/TinyChart.tsx";
 import EventLog from "../components/EventLog.tsx";
+import Card from "../components/Card.tsx";
 
-export function Recovery(){
+export default function Recovery(){
     return(
         <>
             <div className="bg-[#121212]">
@@ -27,24 +27,23 @@ export function Recovery(){
                         </Card>
                         <div className="grid grid-cols-2 gap-4 mt-4">
                             <Card className=" ">
-                                <TextData sensorId="Altitude" enhet="METERS"/>
+                                <TextData sensorId="Altitude" unit="METERS"/>
                                 <div className="m-4">
                                     <TinyChart sensorId="Climbrate"/>
                                 </div>
                             </Card>
                             <Card className="">
-                                <TextData sensorId="Climbrate" enhet="M/S"/>
+                                <TextData sensorId="Climbrate" unit="M/S"/>
                                 <div className="m-4">
                                     <TinyChart sensorId="Climbrate"/>
                                 </div>  
                             </Card>
-                            
                         </div>
                     </div>
                     <div className="w-64">
                     <Card className="ml-4 pl-5 pr-5 h-72 overflow-y-auto">
                         <p className="uppercase tracking-[0.25em] text-white font-semibold mb-4">
-                            Statues
+                            Statuses
                         </p>
                         <div>
                             <TextData sensorId="Status1"/>
@@ -61,9 +60,7 @@ export function Recovery(){
                     </Card>
                     </div>
                 </div>
-                
             </div>
-            
         </>
     )   
 }

@@ -2,10 +2,10 @@ import Header from "../components/Header.tsx"
 import FuelTank from "../components/FuelTankChart.tsx";
 import TextData from "../components/TextData.tsx";
 import ChamberTemp from "../components/ChamberTemp.tsx";
-import { Card } from "../components/Card.tsx";
 import TinyBarChart from "../components/BarChart.tsx";
+import Card from "../components/Card.tsx";
 
-export function Propulsion(){
+export default function Propulsion(){
     return (
         <div className="bg-[#121212] min-h-screen flex flex-col">
             <Header pageName="Propulsion"/>
@@ -42,7 +42,6 @@ export function Propulsion(){
                         </div>
                     </Card>
                 </div>
-
             </div>
             <Card className="flex justify-between rounded-none">
                 <TextData sensorId="Yaw"/>

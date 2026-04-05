@@ -1,6 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 import { useSelector } from "react-redux";
-import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
+import {selectLatestTelemetryValueById} from "../state/telemetry/telemetrySlice";
 
 type Props = {
   sensorIdRoll: string;
@@ -9,21 +9,21 @@ type Props = {
 };
 
 export default function RocketModel({ sensorIdRoll, sensorIdPitch, sensorIdYaw }: Props) {
-    const rollEntries = useSelector(selectTelemetryValuesById(sensorIdRoll));
-    const pitchEntries = useSelector(selectTelemetryValuesById(sensorIdPitch));
-    const yawEntries = useSelector(selectTelemetryValuesById(sensorIdYaw));
+    const rollEntry = useSelector(selectLatestTelemetryValueById(sensorIdRoll));
+    const pitchEntry = useSelector(selectLatestTelemetryValueById(sensorIdPitch));
+    const yawEntry = useSelector(selectLatestTelemetryValueById(sensorIdYaw));
 
-    const roll = ((rollEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
-    const pitch = ((pitchEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
-    const yaw = ((yawEntries?.at(-1)?.value ?? 0) / 1000) * Math.PI / 180;
+    const roll = (rollEntry?.value ?? 0 / 1000) * Math.PI / 180;
+    const pitch = (pitchEntry?.value ?? 0 / 1000) * Math.PI / 180;
+    const yaw = (yawEntry?.value ?? 0 / 1000) * Math.PI / 180;
 
     const { scene } = useGLTF("/rocket.glb");
 
     return (
-    <group scale={0.01} rotation={[pitch, yaw, roll]} rotation-order="ZYX">
-        <group>
-        <primitive object={scene} />
+        <group scale={0.01} rotation={[pitch, yaw, roll]} rotation-order="ZYX">
+            <group>
+            <primitive object={scene} />
+            </group>
         </group>
-    </group>
     );
 }

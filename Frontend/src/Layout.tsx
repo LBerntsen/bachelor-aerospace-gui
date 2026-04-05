@@ -1,8 +1,7 @@
-import { Navbar } from "./components/NavBar"
 import { Outlet } from "react-router-dom"
+import Navbar from "./components/NavBar.tsx";
 
-
-export function Layout(){
+export default function Layout(){
     return (
         <>
             <div className="bg-black">

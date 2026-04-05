@@ -6,7 +6,8 @@ type TinyChartProps = {
   sensorId: string;
 };
 
-const TinyChart = ({ sensorId }: TinyChartProps) => {
+export default function TinyChart ({ sensorId }: TinyChartProps)
+{
   const data = useSelector(selectTelemetryValuesById(sensorId));
 
   return (
@@ -29,5 +30,3 @@ const TinyChart = ({ sensorId }: TinyChartProps) => {
     </div>
   );
 };
-
-export default TinyChart;

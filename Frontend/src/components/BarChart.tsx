@@ -2,11 +2,13 @@ import { BarChart, Bar, ResponsiveContainer } from "recharts";
 import { useSelector } from "react-redux";
 import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
 
-type BarChartProps = {
-  sensorId: string;
-};
+interface TinyBarChartProps
+{
+  sensorId: string
+}
 
-const TinyBarChart = ({ sensorId }: BarChartProps) => {
+export default function TinyBarChart ({ sensorId }: TinyBarChartProps)
+{
   const data = useSelector(selectTelemetryValuesById(sensorId));
 
   return (
@@ -19,5 +21,3 @@ const TinyBarChart = ({ sensorId }: BarChartProps) => {
     </div>
   );
 };
-
-export default TinyBarChart;

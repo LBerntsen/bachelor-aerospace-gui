@@ -1,9 +1,10 @@
-type Props = {
-  children: React.ReactNode;
-  className?: string;
-};
+interface CardProps
+{
+  children: React.ReactNode
+  className?: string
+}
 
-export function Card({ children, className = ""}: Props) {
+export default function Card({ children, className = ""}: CardProps) {
   return (
     <div className={`rounded-2xl bg-[#161616] p-4 border border-[#1e293b] ${className}`}>
       {children}

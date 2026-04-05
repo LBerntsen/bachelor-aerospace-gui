@@ -3,9 +3,8 @@ import phoenixLogo from "../assets/Pheonix_logo.jpg";
 import {selectState} from "../state/telemetry/telemetrySlice.ts";
 import {useSelector} from "react-redux";
 
-export function Navbar(){
+export default function Navbar(){
     return (
-        <>
         <div className=" ">
             <div className="flex flex-col bg-black p-8 sm:gap-6 sm:py-4">
             <div className="flex flex-row items-center font-bold">
@@ -17,10 +16,6 @@ export function Navbar(){
                     </div>
                     <h1 className="text-white text-xs ">Ground Control System</h1>
                 </div>
-                <div className="">
-                    
-                </div>
-                
             </div>
                 <div className="sm:gap-6 flex flex-col">
                     <Link to ="/" className="text-white hover:bg-[#1e293b] p-2 rounded tracking-[0.25em]">Dashboard </Link>
@@ -32,7 +27,6 @@ export function Navbar(){
                 </div>
             </div>
         </div>
-        </>
     )
 }
 

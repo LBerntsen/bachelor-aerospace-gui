@@ -1,8 +1,8 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
-import { Home } from "./pages/home.tsx";
-import { Layout } from "./Layout.tsx";
-import { Propulsion } from "./pages/propulsion.tsx";
-import { Recovery } from './pages/recovery.tsx';
+import Layout from "./Layout.tsx";
+import Recovery from "./pages/recovery.tsx";
+import Home from "./pages/home.tsx";
+import Propulsion from "./pages/propulsion.tsx";
 
 export default function App() {
     return (

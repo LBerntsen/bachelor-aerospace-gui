@@ -1,20 +1,14 @@
 import { useSelector } from "react-redux";
-import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
-
+import {selectLatestTelemetryValueById} from "../state/telemetry/telemetrySlice";
 
 type TextDataProps = {
   sensorId: string;
-  enhet?:string
+  unit?:string
 };
 
-const TextData = ({ sensorId, enhet }: TextDataProps) => {
-
-    const data = useSelector(selectTelemetryValuesById(sensorId));
-
-    const hasData = data.length > 0;
-    const latestValue = data[data.length - 1]?.value;
-
-
+export default function TextData ({ sensorId, unit }: TextDataProps)
+{
+    const latestValue = useSelector(selectLatestTelemetryValueById(sensorId));
 
     return (
         <div className="">
@@ -23,14 +17,12 @@ const TextData = ({ sensorId, enhet }: TextDataProps) => {
             </p>
             <div className="flex items-end gap-4">
                 <span className="text-4xl font-semibold text-neutral-100">
-                    {!hasData ? "--" : latestValue?.toLocaleString()}
+                    {latestValue ? latestValue.value.toLocaleString() : "--"}
                 </span>
                 <p className="text-xl text-neutral-100 tracking-[0.25em]">
-                    {!enhet ? "": enhet}
+                    {unit ? unit : ""}
                 </p>
             </div>
         </div>
     );
 };
-
-export default TextData;

@@ -76,9 +76,9 @@ export function selectTelemetryValuesById(id: string)
 
 export function selectLatestTelemetryValueById(id: string)
 {
-    return function (state: RootState): SensorEntry
+    return function (state: RootState): SensorEntry | undefined
     {
-        return state.telemetry.canMap[id.toLowerCase()]?.at(-1) ?? {timeStamp: new Date().getTime(), value: -1};
+        return state.telemetry.canMap[id.toLowerCase()]?.at(-1) ?? undefined;
     }
 }
 

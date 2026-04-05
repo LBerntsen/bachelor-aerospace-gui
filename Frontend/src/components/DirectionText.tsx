@@ -1,37 +1,23 @@
 import { useSelector } from "react-redux";
-import { selectTelemetryValuesById } from "../state/telemetry/telemetrySlice";
+import {selectLatestTelemetryValueById} from "../state/telemetry/telemetrySlice";
 
+interface DirectionTextProps
+{
+  sensorId: string
+  unit?: string
+}
 
-type TextDataProps = {
-  sensorId: string;
-  enhet?:string
-};
-
-const DirectionText = ({ sensorId, enhet }: TextDataProps) => {
-
-    const data = useSelector(selectTelemetryValuesById(sensorId));
-
-    const hasData = data.length > 0;
-    const datalatest = data[data.length - 1]?.value;
-    const latestValue = (datalatest / 1000) * Math.PI / 180;
-
-
+export default function DirectionText ({ sensorId, unit }: DirectionTextProps)
+{
+    const latestValue = useSelector(selectLatestTelemetryValueById(sensorId));
 
     return (
         <div className="">
-            <p className="text-xs text-neutral-500 font-semibold tracking-[0.25em] md-4">
-                {sensorId}
-            </p>
+            <p className="text-xs text-neutral-500 font-semibold tracking-[0.25em] md-4">{sensorId}</p>
             <div className="flex items-end">
-                <span className="text-4xl font-semibold text-neutral-100">
-                    {!hasData ? "--" : latestValue?.toLocaleString()}
-                </span>
-                <p className="text-4xl text-neutral-100">
-                    {!enhet ? "": enhet}
-                </p>
+                <span className="text-4xl font-semibold text-neutral-100">{latestValue ? ((latestValue.value / 1000) * Math.PI / 180).toLocaleString() : "--"}</span>
+                <p className="text-4xl text-neutral-100">{unit ? unit : ""}</p>
             </div>
         </div>
     );
 };
-
-export default DirectionText;
