@@ -10,7 +10,7 @@ type FuelTankProps = {
 export default function FuelTank ({ sensorId, fuelColor }: FuelTankProps)
 {
     const latestEntry = useSelector(selectLatestTelemetryValueById(sensorId));
-    const chartData = latestEntry ? [latestEntry.value] : [];
+    const chartData = latestEntry ? [latestEntry] : [];
 
     return (
         <>
