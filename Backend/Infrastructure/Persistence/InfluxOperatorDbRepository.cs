@@ -76,19 +76,44 @@ public class InfluxOperatorDbRepository : IDisposable
             .Field("value", data.Value)
             .Timestamp(DateTime.Parse(data.TimeStamp).ToUniversalTime(), WritePrecision.Ns);
         
-        _localApi.WritePoint(point, _localBucket, _localOrg);
-        _cloudApi.WritePoint(point, _cloudBucket, _cloudOrg);
+        ExecuteWrite(point, _localApi, _localBucket, _localOrg, "local");
+        ExecuteWrite(point, _cloudApi, _cloudBucket, _cloudOrg, "cloud");
+    }
+
+    public void ExecuteWrite(PointData point, WriteApi writeApi, string bucket, string org, string apiTag)
+    {
+        try
+        {
+            writeApi.WritePoint(point, bucket, org);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Could not write point to {apiTag} database {e.Message}");
+        }
     }
 
     public async Task<List<string>> GetSessionsAsync()
     {
+        try
+        {
+            return await ExecuteGetSessionsQueryAsync(_cloudClient, _cloudBucket, _cloudOrg);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed getting session data from cloud client, trying local...");
+            return await ExecuteGetSessionsQueryAsync(_localClient, _localBucket, _localOrg);
+        }
+    }
+
+    private async Task<List<string>> ExecuteGetSessionsQueryAsync(InfluxDBClient client, string bucket, string org)
+    {
         var query = $@"
-            from(bucket: ""{_localBucket}"")
+            from(bucket: ""{bucket}"")
             |> range(start: 0)
             |> keep(columns: [""session_id""])
             |> distinct(column: ""session_id"")";
 
-        var tables = await _localClient.GetQueryApi().QueryAsync(query, _localOrg);
+        var tables = await client.GetQueryApi().QueryAsync(query, org);
 
         return tables
             .SelectMany(table => table.Records)
