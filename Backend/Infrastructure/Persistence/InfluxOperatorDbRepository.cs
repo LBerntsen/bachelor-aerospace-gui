@@ -121,4 +121,45 @@ public class InfluxOperatorDbRepository : IDisposable
             .Where(s => !string.IsNullOrEmpty(s))
             .ToList();
     }
+    
+    public async Task<List<SensorData>> GetSessionDataAsync(string sessionId)
+    {
+        try
+        {
+            return await ExecuteGetSessionDataQueryAsync(sessionId, _cloudClient, _cloudBucket, _cloudOrg);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed getting session data from cloud client, trying local...");
+            return await ExecuteGetSessionDataQueryAsync(sessionId, _localClient, _localBucket, _localOrg);
+        }
+    }
+
+    private async Task<List<SensorData>> ExecuteGetSessionDataQueryAsync(string sessionId, InfluxDBClient client, string bucket,
+        string org)
+    {
+        var query = $@"
+        import ""influxdata/influxdb/v1""
+        from(bucket: ""{bucket}"")
+        |> range(start: 0)
+        |> filter(fn: (r) => r.session_id == ""{sessionId}"")
+        |> v1.fieldsAsCols()
+        |> group()
+        |> sort(columns: [""_time""])";
+    
+        var tables = await client.GetQueryApi().QueryAsync(query, org);
+
+        return tables
+            .SelectMany(table => table.Records)
+            .Select(record => {
+                var time = record.GetTime()?.ToDateTimeUtc().ToString("O") ?? DateTime.UtcNow.ToString("O");
+                var id = record.GetValueByKey("sensor_id")?.ToString() ?? "unknown";
+                
+                var val = record.GetValueByKey("value");
+                double doubleVal = val != null ? Convert.ToDouble(val) : 0.0;
+                
+                return new SensorData(time, id, doubleVal);
+            })
+            .ToList();
+    }
 }
