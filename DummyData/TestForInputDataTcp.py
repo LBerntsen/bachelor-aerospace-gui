@@ -30,16 +30,11 @@ def run_sender():
                 for row in reader:
                     if not row: continue
                     
-                    # Oppdaterer tidsstempel til "akkurat nå"
                     row[0] = get_current_timestamp()
                     
-                    # Pakk sammen til streng og send
                     message = ";".join(row) + "\n"
                     s.sendall(message.encode('utf-8'))
-                    
-                    # Valgfritt: Print for å se progresjon
-                    # print(f"Sendt: {row[0]} - {row[2]}: {row[3]}")
-                    
+
                     time.sleep(DELAY)
                     
             print("Ferdig med å sende alle data.")
