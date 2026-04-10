@@ -46,15 +46,37 @@ public class InfluxSource : ITelemetrySource
 
         List<SensorData> dataPoints = await _repository.GetSessionDataAsync(sessionId);
         Console.WriteLine($"REPLAY: Fant {dataPoints.Count} punkter for {sessionId}");
+        
+        var sessionStartRealTime = DateTime.Parse(dataPoints[0].TimeStamp).ToUniversalTime();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
 
-        foreach (SensorData point in dataPoints)
+        for (int i = 0; i < dataPoints.Count; i++)
         {
             if (cancellationToken.IsCancellationRequested)
                 break;
 
-            _store.Add(point);
+            var currentPoint = dataPoints[i];
+            
+            var pointTime = DateTime.Parse(currentPoint.TimeStamp).ToUniversalTime();
+            var targetOffsetMs = (pointTime - sessionStartRealTime).TotalMilliseconds;
+            
+            while (watch.Elapsed.TotalMilliseconds < targetOffsetMs)
+            {
+                var diff = targetOffsetMs - watch.Elapsed.TotalMilliseconds;
+            
+                if (diff > 16) 
+                    await Task.Delay(1, cancellationToken); 
+                else 
+                    await Task.Yield(); 
 
-            await Task.Delay(1, cancellationToken); // fjerne når timing er på plass, må først få skikkelig data
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+            }
+            
+            _store.Add(currentPoint);
         }
+    
+        watch.Stop();
+        Console.WriteLine("REPLAY: Ferdig.");
     }
 }
