@@ -1,24 +1,50 @@
 interface ButtonsProps {
   buttonTitle: string;
   onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
 }
 
-export default function Button({ buttonTitle, onClick }: ButtonsProps) {
+export default function Button({
+    buttonTitle,
+    onClick,
+    disabled = false,
+    className = "",
+}: ButtonsProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="
-        px-5 py-2.5
-        bg-blue-600 text-white
-        font-medium text-sm
-        rounded-xl
-        shadow-md
-        hover:bg-blue-700
-        active:scale-95
+      disabled={disabled}
+      className={`
+        ${className}
+        w-full
+        px-4 py-2.5
+        rounded-lg
+
+        font-mono text-xs uppercase tracking-widest
+
+        border border-white/10
+        bg-[#0f172a]
+
+        text-white/90
+
         transition-all duration-200
-        focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-      "
+
+        ${
+          disabled
+            ? "opacity-40 cursor-not-allowed"
+            : `
+              hover:bg-[#1e293b]
+              hover:border-white/20
+              hover:text-white
+              hover:shadow-[0_0_10px_rgba(30,41,59,0.6)]
+              active:scale-[0.97]
+            `
+        }
+
+        focus:outline-none focus:ring-1 focus:ring-white/20
+      `}
     >
       {buttonTitle}
     </button>

@@ -15,10 +15,10 @@ export default function Layout(){
         console.log("Live started");
     };
     
-    // Stop LIVE
+    // Stop LIVE/Replay
     const stopLive = async () => {
         await fetch(`${BASE_URL}/state/stop`, { method: "POST" });
-        console.log("Live stopped");
+        console.log("Live/Replay stopped");
     };
     
     // Get replays
@@ -56,16 +56,16 @@ export default function Layout(){
         <>
             <div className="bg-black">
                 <div className="flex min-h-screen">
-                    <div>
+                    <div className="mr-2 ml-2">
                         <Navbar/>
-                        
+                        <div className="border-t border-white/10 my-4" />
                         {/* CONTROL PANEL */}
-                        <div className="mb-6 flex flex-col gap-3 mr-4 ml-4">
-                            <Button buttonTitle="Start Live" onClick={startLive} />
+                        <div className="mb-6 flex flex-col gap-3">
+                            <Button buttonTitle="Start Live" onClick={startLive} className="hover:shadow-green-400"/>
 
-                            <Button buttonTitle="Stop Live" onClick={stopLive} />
+                            <Button buttonTitle="Stop" onClick={stopLive} className="hover:shadow-red-400"/>
 
-                            <Button buttonTitle="Refresh Replays" onClick={getReplays} />
+                            {/* <Button buttonTitle="Refresh Replays" onClick={getReplays} /> */}
 
                             <select
                                 value={selectedReplay}
@@ -85,7 +85,11 @@ export default function Layout(){
                                 ))}
                             </select>
 
-                            <Button buttonTitle="Start Replay" onClick={startReplay} />
+                            <Button
+                                buttonTitle="Start Replay"
+                                onClick={startReplay}
+                                disabled={!selectedReplay}
+                            />
                         </div>
                     </div>
                     <main className="flex-1">
