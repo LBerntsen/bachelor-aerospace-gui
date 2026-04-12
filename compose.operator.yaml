@@ -19,6 +19,9 @@ services:
       - "127.0.0.1:8088:8088"
     environment:
       - AppMode=Operator
+      - CommandServerIP=host.docker.internal
+      - CommandServerPort=8090
+      - CommandKey=my-secret-password-please-change-this
       - InfluxDBLocal__Url=http://phoenix_influx_local:8086
       - InfluxDBLocal__Token=my-super-secret-local-token
       - InfluxDBLocal__Org=UiSAerospace

@@ -8,6 +8,8 @@ using Domain.Telemetry;
 using Infrastructure.DataIngestion;
 using Infrastructure.DataIngestion.Implementations;
 using Infrastructure.Persistence;
+using Infrastructure.Services;
+using Infrastructure.Services.Interfaces;
 using Infrastructure.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +36,7 @@ if (!isSponsor)
     builder.Services.AddSingleton<ITelemetrySource, TcpSource>();
     builder.Services.AddSingleton<ITelemetrySource, CsvSource>();
     builder.Services.AddSingleton<ITelemetrySource, InfluxSource>();
+    builder.Services.AddSingleton<ICommandService, CommandService>();
     builder.Services.AddHostedService<SignalRWorker>();
     builder.Services.AddHostedService<InfluxWorker>();
     builder.Services.AddSingleton<SystemStateService>();
