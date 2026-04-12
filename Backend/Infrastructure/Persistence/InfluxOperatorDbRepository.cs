@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Persistence;
 
-public class InfluxOperatorDbRepository : IDisposable
+public class InfluxOperatorDbRepository : InfluxRepositoryBase
 {
     private readonly InfluxDBClient _localClient;
     private readonly WriteApi _localApi;
@@ -22,41 +22,27 @@ public class InfluxOperatorDbRepository : IDisposable
 
     public InfluxOperatorDbRepository(IConfiguration config)
     {
-        var localUrl = config["InfluxDBLocal:Url"] ?? "http://localhost:8086";
-        var localToken = config["InfluxDBLocal:Token"];
         _localBucket = config["InfluxDBLocal:Bucket"];
         _localOrg = config["InfluxDBLocal:Org"];
-
-        var localOptions = new InfluxDBClientOptions.Builder()
-            .Url(localUrl)
-            .AuthenticateToken(localToken.ToCharArray())
-            .Build();
-
+        
         WriteOptions realtimeWriteOptions = new WriteOptions
         {
             BatchSize = 50,
             FlushInterval = 1000,
             RetryInterval = 3000
         };
-
-        _localClient = InfluxDBClientFactory.Create(localOptions);
+        
+        _localClient = CreateClient(config, "InfluxDBLocal");
         _localApi = _localClient.GetWriteApi(realtimeWriteOptions);
         
-        var cloudUrl = config["InfluxDBCloud:Url"];
-        var cloudToken = config["InfluxDBCloud:Token"];
         _cloudBucket = config["InfluxDBCloud:Bucket"];
         _cloudOrg = config["InfluxDBCloud:Org"];
-
-        var cloudOptions = new InfluxDBClientOptions.Builder()
-            .Url(cloudUrl)
-            .AuthenticateToken(cloudToken.ToCharArray())
-            .Build();
-
-        _cloudClient = InfluxDBClientFactory.Create(cloudOptions);
+        
+        _cloudClient = CreateClient(config,  "InfluxDBCloud");
         _cloudApi = _cloudClient.GetWriteApi(realtimeWriteOptions);
     }
     
-    public void Dispose()
+    public override void Dispose()
     {
         _localClient.Dispose();
         _cloudClient.Dispose();
@@ -126,40 +112,12 @@ public class InfluxOperatorDbRepository : IDisposable
     {
         try
         {
-            return await ExecuteGetSessionDataQueryAsync(sessionId, _cloudClient, _cloudBucket, _cloudOrg);
+            return await QuerySessionDataInternal(_cloudClient, _cloudBucket, _cloudOrg, sessionId);
         }
         catch (Exception e)
         {
             Console.WriteLine("Failed getting session data from cloud client, trying local...");
-            return await ExecuteGetSessionDataQueryAsync(sessionId, _localClient, _localBucket, _localOrg);
+            return await QuerySessionDataInternal(_localClient, _localBucket, _localOrg, sessionId);
         }
-    }
-
-    private async Task<List<SensorData>> ExecuteGetSessionDataQueryAsync(string sessionId, InfluxDBClient client, string bucket,
-        string org)
-    {
-        var query = $@"
-        import ""influxdata/influxdb/v1""
-        from(bucket: ""{bucket}"")
-        |> range(start: 0)
-        |> filter(fn: (r) => r.session_id == ""{sessionId}"")
-        |> v1.fieldsAsCols()
-        |> group()
-        |> sort(columns: [""_time""])";
-    
-        var tables = await client.GetQueryApi().QueryAsync(query, org);
-
-        return tables
-            .SelectMany(table => table.Records)
-            .Select(record => {
-                var time = record.GetTime()?.ToDateTimeUtc().ToString("O") ?? DateTime.UtcNow.ToString("O");
-                var id = record.GetValueByKey("sensor_id")?.ToString() ?? "unknown";
-                
-                var val = record.GetValueByKey("value");
-                double doubleVal = val != null ? Convert.ToDouble(val) : 0.0;
-                
-                return new SensorData(time, id, doubleVal);
-            })
-            .ToList();
     }
 }

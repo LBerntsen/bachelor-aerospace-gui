@@ -2,10 +2,13 @@ import { Outlet } from "react-router-dom"
 import Navbar from "./components/NavBar.tsx";
 import { useState, useEffect } from "react";
 import Button from "./components/Buttons.tsx";
+import {useSelector} from "react-redux";
+import {selectState} from "./state/telemetry/telemetrySlice.ts";
 
 export default function Layout(){
     const [replays, setReplays] = useState<string[]>([]);
     const [selectedReplay, setSelectedReplay] = useState("");
+    const state = useSelector(selectState());
     
     const BASE_URL = "http://localhost:8087/api";
     
@@ -49,8 +52,9 @@ export default function Layout(){
     
     // AUTO FETCH ON LOAD
     useEffect(() => {
+        console.log("GETTING REPLAYS");
         getReplays();
-    }, []);
+    }, [state]);
     
     return (
         <>
