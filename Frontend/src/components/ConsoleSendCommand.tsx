@@ -32,10 +32,7 @@ export function CommandSender(): JSX.Element {
       return false;
       
     };
-
     
-
-  
     const sendCommand = async () => {
     setLoading(true);
     setError(null);
