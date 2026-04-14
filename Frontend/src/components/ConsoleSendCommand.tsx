@@ -1,48 +1,62 @@
-import { useState, useEffect, type JSX } from "react";
+import { useState, /*useEffect,*/ type JSX } from "react";
+import Button from "./Buttons.tsx";
+import { backendUrl } from "../state/utility.ts";
 
-type CommandResponse = {
+/*type CommandResponse = {
   success: boolean;
   message?: string;
-};
+};*/
 
 export function CommandSender(): JSX.Element {
-  const [command, setCommand] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<CommandResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [password, setPassword] = useState<string>("");
+  //const [command, setCommand] = useState<string>("");
+  //const [loading, setLoading] = useState<boolean>(false);
+  //const [response, setResponse] = useState<CommandResponse | null>(null);
+  //const [error, setError] = useState<string | null>(null);
+  
 
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [command, setCommand] = useState("");
 
-    const fetchPassword = async () => {
-      try {
-        const passwordResponse = await fetch("/api/command/key", {
+    async function authenticate() {
+        try {
+        const passwordResponse = await fetch(`${backendUrl}/api/command`, {
             method: "GET",
             headers: {
-                "X-Operator-Password": password
+                "X-Operator-Command-Key": password
             }
         });
-        if (passwordResponse.status == 200){
-            return true;
+
+        if (passwordResponse.ok){
+            console.log("TEST");
+            setAuthenticated(true);
         }
-      } 
-      catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        else
+            setAuthenticated(false);
+        } 
+        catch (err) {
+        //setError(err instanceof Error ? err.message : "Unknown error");
         console.log("Password fetch error:", err);
-      }
-      return false;
-      
+        setAuthenticated(false);
+        }
     };
+
+    function logout()
+    {
+        setAuthenticated(false);
+        setPassword("");
+    }
 
     
 
-  
+  /*
     const sendCommand = async () => {
     setLoading(true);
     setError(null);
     setResponse(null);
 
     try {
-      const res = await fetch(`/api/command/${command}`, {
+      const res = await fetch(`${backendUrl}/api/command/${command}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,8 +76,27 @@ export function CommandSender(): JSX.Element {
     } finally {
         setLoading(false);
     }
-    };
+    };*/
 
+    return (
+        <div className={"text-white"}>
+            {authenticated ? (
+                <div className="flex items-center justify-center">
+                    <Button buttonTitle={"Send kommand"} onClick={authenticate}/>
+                    <label>kommand</label>
+                    <input className="border" value={command} onChange={(e) => setCommand(e.currentTarget.value)}/>
+                    <Button buttonTitle={"Logg ut"} onClick={logout}/>
+                </div>
+            ) : (
+                <div className="flex items-center justify-between">
+                    <label>Password</label>
+                    <input className="border" value={password} onChange={(e) => setPassword(e.currentTarget.value)}/>
+                    <Button buttonTitle={"Logg inn"} onClick={authenticate}/>
+                </div>
+            )}
+        </div>
+    );
+/*
   return (
     <div className="p-4 max-w-md mx-auto space-y-4">
         
@@ -115,4 +148,5 @@ export function CommandSender(): JSX.Element {
         )}
     </div>
   );
+  */
 }
