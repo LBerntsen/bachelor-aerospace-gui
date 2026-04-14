@@ -1,6 +1,7 @@
-import { useState } from "react";
+import {type ChangeEvent, useState} from "react";
 import Button from "./Buttons.tsx";
 import { backendUrl } from "../state/utility.ts";
+import {useLogger} from "../context/LoggerContext.tsx";
 
 interface CommandResponseDto
 {
@@ -13,9 +14,10 @@ export function CommandSender() {
     const [authenticated, setAuthenticated] = useState(false);
     const [password, setPassword] = useState("");
     const [command, setCommand] = useState("");
+    const logger = useLogger();
 
     async function authenticate() {
-        console.log("Authenticating...");
+        logger.log("Authenticating...");
         try {
             const authenticatedResponse = await fetch(`${backendUrl}/api/command`, {
                 method: "GET",
@@ -26,19 +28,19 @@ export function CommandSender() {
 
             if (authenticatedResponse.ok) {
                 setAuthenticated(true);
-                console.log("Authentication successful");
+                logger.log("Authentication successful");
             } else {
                 setAuthenticated(false);
-                console.error("Authentication failed");
+                logger.error("Authentication failed");
             }
 
         } catch (err) {
-            console.error("Error while authenticating:", err);
+            logger.error("Error while authenticating:", err);
             setAuthenticated(false);
         }
     }
     async function sendCommand() {
-        console.log("Sending command:", command);
+        logger.log(`Sending command:`, command);
 
         try
         {
@@ -55,14 +57,14 @@ export function CommandSender() {
             const result: CommandResponseDto = await response.json();
 
             if(response.ok)
-                console.log(result.message);
+                logger.log(result.message);
             else
-                console.error(result.message);
+                logger.error(result.message);
 
         }
         catch (err)
         {
-            console.error("Error while sending a command: ", err);
+            logger.error("Error while sending a command: ", err);
         }
     }
 
@@ -72,13 +74,21 @@ export function CommandSender() {
         setPassword("");
     }
 
+    function validateCommandInput(event: ChangeEvent<HTMLInputElement>)
+    {
+        const value = event.target.value;
+        if (/^\d*$/.test(value)) {
+            setCommand(value);
+        }
+    }
+
     return (
         <div className="text-white">
             {authenticated ? (
                 <div className="flex flex-col gap-2 w-full max-w-md">
-                    <input className="border rounded-lg w-full p-2" value={command} placeholder="Enter command..." onChange={(e) => setCommand(e.currentTarget.value)}/>
+                    <input className="border rounded-lg w-full p-2" value={command} placeholder="Enter command..." onChange={validateCommandInput}/>
                     <div className="flex gap-2">
-                        <Button buttonTitle={"Send kommand"} onClick={sendCommand} />
+                        <Button buttonTitle={"Send kommand"} disabled={command.length === 0} onClick={sendCommand} />
                         <Button buttonTitle={"Logg ut"} onClick={logout} />
                     </div>
                 </div>
