@@ -1,4 +1,5 @@
 using API.Attributes;
+using Domain.DTOs;
 using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,13 +24,10 @@ public class CommandController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("{id}")]
+    [HttpPost("{id:int}")]
     public async Task<IActionResult> SendCommand(int id)
     {
-        bool success = await _commandService.SendCommandByIdAsync(id);
-
-        if (success)
-            return Ok();
-        return StatusCode(StatusCodes.Status500InternalServerError);
+        CommandResponseDto response = await _commandService.SendCommandByIdAsync(id);
+        return StatusCode(response.code, response);
     }
 }
