@@ -58,7 +58,7 @@ public class CommandService : ICommandService
             var response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
             Console.WriteLine($"Response from server: {response}");
             
-            return new CommandResponseDto(true, 200, response);
+            return new CommandResponseDto(true, 200, $"Response from server: {response}");
         }
         catch (Exception e)
         {
