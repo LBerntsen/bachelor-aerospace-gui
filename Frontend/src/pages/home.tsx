@@ -3,6 +3,9 @@ import RocketScene from "../components/RocketScene.tsx";
 import DirectionText from "../components/DirectionText.tsx";
 import ErrorBoundary from "../components/ErrorBoundary.tsx";
 import Card from "../components/Card.tsx";
+import ConsoleViewer from "../components/ConsoleLog.tsx";
+import TestChart from "../components/TestChart.tsx";
+import { CommandSender } from "../components/ConsoleSendCommand.tsx";
 
 export default function Home() {
   
@@ -34,7 +37,9 @@ export default function Home() {
             <RocketScene />
           </div>
         </ErrorBoundary>
-
+        <ConsoleViewer />
+        <CommandSender />
+        
       </Card>
     </div>
   );

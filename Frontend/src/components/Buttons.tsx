@@ -21,20 +21,13 @@ export default function Button({
         w-full
         px-4 py-2.5
         rounded-lg
-
         font-mono text-xs uppercase tracking-widest
-
         border border-white/10
         bg-[#0f172a]
-
         text-white/90
-
         transition-all duration-200
 
-        ${
-          disabled
-            ? "opacity-40 cursor-not-allowed"
-            : `
+        ${disabled? "opacity-40 cursor-not-allowed": `
               hover:bg-[#1e293b]
               hover:border-white/20
               hover:text-white
@@ -42,7 +35,6 @@ export default function Button({
               active:scale-[0.97]
             `
         }
-
         focus:outline-none focus:ring-1 focus:ring-white/20
       `}
     >
