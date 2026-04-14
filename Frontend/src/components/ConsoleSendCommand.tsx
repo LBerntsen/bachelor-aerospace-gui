@@ -1,115 +1,95 @@
-import { useState, useEffect, type JSX } from "react";
-
-type CommandResponse = {
-  success: boolean;
-  message?: string;
-};
+import { useState, type JSX } from "react";
+import Button from "./Buttons.tsx";
+import { backendUrl } from "../state/utility.ts";
 
 export function CommandSender(): JSX.Element {
-  const [command, setCommand] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<CommandResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [password, setPassword] = useState<string>("");
 
-
-    const fetchPassword = async () => {
-      try {
-        const passwordResponse = await fetch("/api/command/key", {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [command, setCommand] = useState("");
+    async function authenticate() {
+        console.log("Authenticating with password:", password);
+        try {
+        const passwordResponse = await fetch(`${backendUrl}/api/command`, {
             method: "GET",
             headers: {
-                "X-Operator-Password": password
+                "X-Operator-Command-Key": password
             }
         });
-        if (passwordResponse.status == 200){
-            return true;
+
+        if (passwordResponse.ok) {
+            setAuthenticated(true);
+            console.log("Authentication successful");
+        } else {
+            setAuthenticated(false);
+            console.error("Authentication failed: Invalid password");
         }
-      } 
-      catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-        console.log("Password fetch error:", err);
-      }
-      return false;
-      
-    };
-    
-    const sendCommand = async () => {
-    setLoading(true);
-    setError(null);
-    setResponse(null);
 
-    try {
-      const res = await fetch(`/api/command/${command}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Operator-Command-Key": password
+        } catch (err) {
+            console.error("Password fetch error:", err);
+            setAuthenticated(false);
+        }
+    }
+    async function sendCommand() {
+        console.log("Sending command:", command);
 
-        },
-      });
+        try {
+            const response = await fetch(
+                `${backendUrl}/api/command?command=${encodeURIComponent(command)}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "X-Operator-Command-Key": password
+                    }
+                }
+            );
 
-    if (!res.ok) {
-        console.log(`HTTP error: ${res.status}`);
+            if (!response.ok) {
+                const text = await response.text();
+                console.error("Failed to send command:", response.status, text);
+            } else {
+                console.log("Command sent successfully");
+            }
+        } catch (err) {
+            console.error("Command send error:", err);
+        }
     }
 
-    const data: CommandResponse = await res.json();
-    setResponse(data);
-    } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-        setLoading(false);
+    function logout()
+    {
+        setAuthenticated(false);
+        setPassword("");
     }
-    };
 
-  return (
-    <div className="p-4 max-w-md mx-auto space-y-4">
-        
-        <div className="flex gap-2">
-            <input
-                type="text"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter Password..."
-                className="flex-1 px-3 py-2 rounded-xl border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-                onClick={fetchPassword}
-                disabled={loading}
-                className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-            >
-                {loading ? "Sending..." : "Send"}
-            </button>
-        </div>
-        <h2 className="text-xl font-semibold">Send Command</h2>
+    return (
+        <div className="text-white">
+            {authenticated ? (
+                <div className="flex flex-col gap-2 w-full max-w-md">
+                    <input
+                        className="border w-full p-2"
+                        value={command}
+                        placeholder="Enter command..."
+                        onChange={(e) => setCommand(e.currentTarget.value)}
+                    />
 
-        <div className="flex gap-2">
-        <input
-            type="text"
-            value={command}
-            onChange={(e) => setCommand(e.target.value)}
-            placeholder="Enter command..."
-            className="flex-1 px-3 py-2 rounded-xl border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-            onClick={sendCommand}
-            disabled={loading}
-            className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-        >
-            {loading ? "Sending..." : "Send"}
-        </button>
-        </div>
+                    <div className="flex gap-2">
+                        <Button buttonTitle={"Send kommand"} onClick={sendCommand} />
+                        <Button buttonTitle={"Logg ut"} onClick={logout} />
+                    </div>
+                </div>
+            ) : (
+                <div className="flex flex-col gap-2 w-full max-w-md">
 
-        {response && (
-        <div className="p-3 rounded-xl bg-green-100 text-green-800">
-            {response.message ?? "Command sent successfully"}
-        </div>
-        )}
+                    <input
+                        className="border w-full p-2"
+                        value={password}
+                        placeholder="Enter password..."
+                        onChange={(e) => setPassword(e.currentTarget.value)}
+                    />
 
-        {error && (
-        <div className="p-3 rounded-xl bg-red-100 text-red-800">
-            {error}
+                    <Button buttonTitle={"Logg inn"} onClick={authenticate} />
+                </div>
+            )}
         </div>
-        )}
-    </div>
-  );
+    );
 }
