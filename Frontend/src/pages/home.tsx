@@ -1,7 +1,4 @@
-import TextData from "../components/TextData.tsx";
-import RocketScene from "../components/RocketScene.tsx";
-import DirectionText from "../components/DirectionText.tsx";
-import ErrorBoundary from "../components/ErrorBoundary.tsx";
+
 import Card from "../components/Card.tsx";
 import ConsoleViewer from "../components/ConsoleLog.tsx";
 import { CommandSender } from "../components/ConsoleSendCommand.tsx";

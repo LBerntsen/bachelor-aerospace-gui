@@ -30,7 +30,7 @@ export default function avionics() {
                     <DirectionText sensorId="Roll" unit="°" />
                   </Card>
                   <Card className="mt-2">
-                    <TextData sensorId="Altitude" unit="m/s" />
+                    <TextData sensorId="Altitude" unit="m" />
                   </Card>
                 </div>
                 <div className="absolute right-8 z-10 flex flex-col gap-2">
