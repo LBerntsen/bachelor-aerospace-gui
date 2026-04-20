@@ -8,7 +8,7 @@ import Card from "../components/Card.tsx";
 export default function Recovery(){
     return(
         <>
-            <div className="bg-[#121212]">
+            <div className="bg-[#121212] ">
             <Header pageName="Recovery"/>
             </div>
             <div className="m-4">

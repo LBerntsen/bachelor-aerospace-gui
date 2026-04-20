@@ -4,9 +4,10 @@ import {selectTelemetryValuesById} from "../state/telemetry/telemetrySlice";
 
 type TestChartProps = {
   sensorId: string;
+  unit?: string;
 };
 
-export default function TestChart ({ sensorId }: TestChartProps)
+export default function TestChart ({ sensorId, unit }: TestChartProps)
 {
   const data = useSelector(selectTelemetryValuesById(sensorId));
   const latestValue = data[data.length - 1]?.value;
@@ -16,8 +17,8 @@ export default function TestChart ({ sensorId }: TestChartProps)
           <div className="absolute top-5 right-5 z-10">
             <p className="text-xs text-neutral-500 font-semibold">{sensorId}</p>
             <div className="flex items-start gap-2 mt-1">
-              <span className="text-4xl font-semibold ">{latestValue?.toLocaleString() ?? "--"}</span>
-              <span className="text-neutral-400 text-sm">m</span>
+              <span className="text-4xl font-semibold text-white">{latestValue?.toLocaleString()  ?? "--"}</span>
+              <span className="text-neutral-400 text-sm">{unit ?? "--"}</span>
             </div>
       </div>
       <div className="pt-16 h-full">

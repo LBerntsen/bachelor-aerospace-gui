@@ -5,40 +5,17 @@ import ErrorBoundary from "../components/ErrorBoundary.tsx";
 import Card from "../components/Card.tsx";
 import ConsoleViewer from "../components/ConsoleLog.tsx";
 import { CommandSender } from "../components/ConsoleSendCommand.tsx";
+import Header from "../components/Header.tsx";
 
 export default function Home() {
   
   return (
-    <div>
-      <Card>
-        <ErrorBoundary
-          className="text-4xl font-semibold text-neutral-100"
-          fallback="There was an error loading the Rocket model"
-        >
-          <div>
-            <div className="absolute z-10">
-              <Card className="mt-2">
-                <DirectionText sensorId="Yaw" unit="°" />
-              </Card>
-              <Card className="mt-2">
-                <DirectionText sensorId="Pitch" unit="°" />
-              </Card>
-              <Card className="mt-2">
-                <DirectionText sensorId="Roll" unit="°" />
-              </Card>
-              <Card className="mt-2">
-                <TextData sensorId="Altitude" unit="m/s" />
-              </Card>
-            </div>
-          </div>
-
-          <div className="h-100">
-            <RocketScene />
-          </div>
-        </ErrorBoundary>
+    <div className="bg-[#121212] min-h-screen flex flex-col">
+      <Header pageName="Dashboard"/>
+      
+      <Card className="m-4">
         <ConsoleViewer />
         <CommandSender />
-        
       </Card>
     </div>
   );
