@@ -22,8 +22,7 @@ export default function Navbar(){
                     <NavLink to="/propulsion" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Propulsion</NavLink>
                     <NavLink to="/avionics" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Avionics</NavLink>
                     <NavLink to="/recovery" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Recovery</NavLink>
-                    <NavLink to="/mission-archive" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Mission Archive</NavLink>
-                    <NavLink to="/settings" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Settings</NavLink>
+                    <NavLink to="/mission_archive" className={({ isActive }) => `text-white p-2 rounded tracking-[0.25em] transition-colors ${isActive ? "bg-[#1e293b]" : "hover:bg-[#1e293b]"}`}>Mission Archive</NavLink>
                 </div>
             </div>
         </div>
