@@ -8,7 +8,7 @@ A ground control GUI for the **Phoenix 2** rocket launch for UiS Aerospace.
 
 The project focuses on building a clean and responsive user interface with fast telemetry handling. Its primary goal is to provide backend infrastructure that receives telemetry data from the rocket’s flight computer, stores it in a database, and presents it through a graphical interface so launch control can monitor the mission in real time.
 
-The system is designed to support both live launch operations and post-flight analysis. It includes an operator interface for internal use and a sponsor/public interface for external viewers. The system supports live telemetry monitoring, replay of recorded sessions, command handling, and persistent telemetry storage using technologies such as React, .NET, SignalR, Redux, Docker, and InfluxDB.  [oai_citation:0‡Bachelor_aerospace_gui.pdf](sediment://file_00000000eb54720a88a77a486faf4cf3)
+The system is designed to support both live launch operations and post-flight analysis. It includes an operator interface for internal use and a sponsor/public interface for external viewers. The system supports live telemetry monitoring, replay of recorded sessions, command handling, and persistent telemetry storage using technologies such as React, .NET, SignalR, Redux, Docker, and InfluxDB.
 
 ## Preview
 
