@@ -1,11 +1,61 @@
-# bachelor-aerospace-gui
+# Bachelor-Aerospace-Gui
 
+![Logo](Frontend/src/assets/Aerospace_logo.png)
 
-## Project description
-A GUI for the rocket launch of the Pheonix 2. Focused on clean UI and quick data handling.
-The primary goal of this project is to develop a backend infrastructure that transmits telemetry data from the rocket’s flight computer to a database. This data will then be retrieved and presented on a interface, allowing launch controll to monitor the launch in real time.
+## Project Description
+
+A ground control GUI for the **Phoenix 2** rocket launch for UiS Aerospace.
+
+The project focuses on building a clean and responsive user interface with fast telemetry handling. Its primary goal is to provide backend infrastructure that receives telemetry data from the rocket’s flight computer, stores it in a database, and presents it through a graphical interface so launch control can monitor the mission in real time.
+
+The system is designed to support both live launch operations and post-flight analysis. It includes an operator interface for internal use and a sponsor/public interface for external viewers. According to the project thesis, the system supports live telemetry monitoring, replay of recorded sessions, command handling, and persistent telemetry storage using technologies such as React, .NET, SignalR, Redux, Docker, and InfluxDB.  [oai_citation:0‡Bachelor_aerospace_gui.pdf](sediment://file_00000000eb54720a88a77a486faf4cf3)
 
 ## Preview
+
 ![Project Image](images/GUI.png)
-##
-![Logo](Frontend/src/assets/Aerospace_logo.png)
+
+## Features
+
+- Real-time telemetry monitoring
+- Operator dashboard for launch control
+- Public sponsor dashboard for external viewers
+- Telemetry storage using InfluxDB
+- Replay of recorded telemetry sessions
+- Command handling for mission operations
+- Modular frontend components
+- Docker-based deployment
+
+## Tech Stack
+
+### Frontend
+
+- React
+- Redux
+- Tailwind CSS
+- Recharts
+
+### Backend
+
+- .NET 9
+- C#
+- SignalR
+- REST API
+
+### Database and Deployment
+
+- InfluxDB
+- Docker
+- Docker Compose
+
+## Project Structure
+
+```text
+bachelor-aerospace-gui/
+├── Backend/
+│   └── API/
+├── Frontend/
+│   └── src/
+├── images/
+├── compose.operator.yaml
+├── compose.sponsor.yaml
+└── README.md
