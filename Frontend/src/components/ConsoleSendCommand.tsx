@@ -39,12 +39,15 @@ export function CommandSender() {
             setAuthenticated(false);
         }
     }
-    async function sendCommand() {
-        logger.log(`Sending command:`, command);
+    async function sendCommand(aCommandName: string, aCommand: string) {
+        if (!confirm(`Are you sure want to send the "${aCommandName}" command?`))
+            return;
+     
+        logger.log(`Sending command:`, aCommand);
 
         try
         {
-            const response = await fetch(`${backendUrl}/api/command/${command}`,
+            const response = await fetch(`${backendUrl}/api/command/${aCommand}`,
                 {
                     method: "POST",
                     headers: {
@@ -85,15 +88,20 @@ export function CommandSender() {
     return (
         <div className="text-white">
             {authenticated ? (
-                <div className="flex flex-col gap-2 w-full max-w-md">
-                    <input className="border rounded-lg w-full p-2" value={command} placeholder="Enter command..." onChange={validateCommandInput}/>
+                <div className="flex flex-col gap-2 w-full">
                     <div className="flex gap-2">
-                        <Button buttonTitle={"Send kommand"} disabled={command.length === 0} onClick={sendCommand} />
-                        <Button buttonTitle={"Logg ut"} onClick={logout} />
+                        <input className="border rounded-lg flex-2 p-2" value={command} placeholder="Enter command..." onChange={validateCommandInput}/>
+                        <Button className="flex-1" buttonTitle={"Send kommand"} disabled={command.length === 0} onClick={() => sendCommand(command, command)} />
+                        <Button className="flex-1" buttonTitle={"Logg ut"} onClick={logout} />
+                    </div>
+                    <div className="flex gap-2 w-full">
+                        <Button buttonTitle="Abort" onClick={() => sendCommand("Abort", "1")}/>
+                        <Button buttonTitle="Launch" onClick={() => sendCommand("Launch", "2")}/>
+                        <Button buttonTitle="Turn off engine" onClick={() => sendCommand("Turn off engine", "3")}/>
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col gap-2 w-full max-w-md">
+                <div className="flex flex-col gap-2 w-full">
                     <input type={"password"} className="border rounded-lg w-full p-2" value={password} placeholder="Enter password..." onChange={(e) => setPassword(e.currentTarget.value)}/>
                     <Button buttonTitle={"Logg inn"} onClick={authenticate} />
                 </div>
