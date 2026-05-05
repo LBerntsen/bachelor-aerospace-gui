@@ -3,7 +3,7 @@ import RocketScene from "../components/RocketScene.tsx";
 import DirectionText from "../components/DirectionText.tsx";
 import ErrorBoundary from "../components/ErrorBoundary.tsx";
 import Card from "../components/Card.tsx";
-import TestChart from "../components/TestChart.tsx";
+import LineGraphChart from "../components/LineGraphChart.tsx";
 import Header from "../components/Header.tsx";
 
 export default function avionics() {
@@ -12,7 +12,6 @@ export default function avionics() {
     <div className="bg-[#121212] min-h-screen flex flex-col">
       <Header pageName="Avionics"/>
         <div>
-          
           <Card className="m-4">
             <ErrorBoundary
               className="text-4xl font-semibold text-neutral-100"
@@ -50,8 +49,8 @@ export default function avionics() {
           </Card>
         </div>
         <div className=" flex gap-4 mr-4 ml-4">   
-          <TestChart sensorId="Temperature" unit="°C"/>
-          <TestChart sensorId="Climbrate" unit="m/s"/>
+          <LineGraphChart sensorId="Temperature" unit="°C"/>
+          <LineGraphChart sensorId="Climbrate" unit="m/s"/>
         </div>
     </div>
   );

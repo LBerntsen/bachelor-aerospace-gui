@@ -23,6 +23,7 @@ export default function Recovery(){
                                 <RecoveryStatus sensorId="IDLE"/>
                                 <RecoveryStatus sensorId="Fire"/>
                                 <RecoveryStatus sensorId="Status7"/>
+                                <RecoveryStatus sensorId="Status7"/>
                             </div>
                         </Card>
                         <div className="grid grid-cols-2 gap-4 mt-4">

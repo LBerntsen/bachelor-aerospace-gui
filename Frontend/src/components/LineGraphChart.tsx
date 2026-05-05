@@ -2,12 +2,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { useSelector } from "react-redux";
 import {selectTelemetryValuesById} from "../state/telemetry/telemetrySlice";
 
-type TestChartProps = {
+type LineGraphChartProps = {
   sensorId: string;
   unit?: string;
 };
 
-export default function TestChart ({ sensorId, unit }: TestChartProps)
+export default function LineGraphChart ({ sensorId, unit }: LineGraphChartProps)
 {
   const data = useSelector(selectTelemetryValuesById(sensorId));
   const latestValue = data[data.length - 1]?.value;
