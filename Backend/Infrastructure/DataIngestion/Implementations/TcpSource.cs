@@ -14,12 +14,14 @@ public class TcpSource : ITelemetrySource
     private readonly TelemetryStore _store;
     private CancellationTokenSource? _cancellationTokenSource;
     private const int Port = 8088;
+    private readonly CultureInfo _cultureInfo;
     
     public DataSource Type { get; } = DataSource.Tcp;
 
     public TcpSource(TelemetryStore store)
     {
         _store = store;
+        _cultureInfo = CultureInfo.GetCultureInfo("nb-NO");
     }
     
     public Task StartAsync(CancellationToken cancellationToken)
@@ -76,12 +78,9 @@ public class TcpSource : ITelemetrySource
     private void ProcessLine(string line)
     {
         var parts = line.Split(";");
-
-        var norwegianCulture = CultureInfo.GetCultureInfo("nb-NO");
-        
         double value = 0;
             
-        if (double.TryParse(parts[3], NumberStyles.Any, norwegianCulture, out var doubleVal))
+        if (double.TryParse(parts[3], NumberStyles.Any, _cultureInfo, out var doubleVal))
             value = doubleVal;
         else if (bool.TryParse(parts[3], out var boolVal))
             value = boolVal ? 1 : 0;

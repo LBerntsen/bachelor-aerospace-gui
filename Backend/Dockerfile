@@ -5,6 +5,7 @@ COPY ["Backend.sln", "./"]
 COPY ["API/API.csproj", "API/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["tests/Infrastructure.Tests/Infrastructure.Tests.csproj", "tests/Infrastructure.Tests/"]
 
 RUN dotnet restore "Backend.sln"
 
