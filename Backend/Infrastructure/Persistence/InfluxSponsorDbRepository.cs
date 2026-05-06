@@ -30,6 +30,7 @@ public class InfluxSponsorDbRepository : InfluxRepositoryBase
             from(bucket: ""{_cloudBucket}"")
             |> range(start: -7d) 
             |> filter(fn: (r) => r._measurement == ""telemetry"")
+            |> group()
             |> last() 
             |> keep(columns: [""session_id""])";
 
